@@ -9,6 +9,8 @@ import {
   StatusBar,
 	Button,
 	TextInput,
+	Switch,
+	TouchableHighlight,
 } from 'react-native';
 
 import {
@@ -65,14 +67,28 @@ const icons = [
 		name: "Phone",
 		icon: "telephone_receiver",
 	},
+	{
+		id: 9,
+		name: "Medicine",
+		icon: "pill",
+	},
+	{
+		id: 10,
+		name: "Clothes",
+		icon: "shopping_bags",
+	},
+	{
+		id: 11,
+		name: "Phone",
+		icon: "telephone_receiver",
+	},
 ];
 
 const App: () => React$Node = () => {
-	const [
-		category, setCategory,
-		name, setName,
-		amount, setAmount,
-	] = useState({category: "", name: "", amount: 0});
+	const [category, setCategory] = useState("")
+	const [name, setName] = useState("")
+	const [amount, setAmount] = useState("")
+	const [isPrivate, setIsPrivate] = useState(false)
 	
 	const onChangeName = (name) => {
 		setName(name);
@@ -80,6 +96,10 @@ const App: () => React$Node = () => {
 	
 	const onChangeAmount = (amount) => {
 		setAmount(amount);
+	}
+	
+	const onChangeIsPrivate = (isPrivate) => {
+		setIsPrivate(isPrivate);
 	}
 
   return (
@@ -92,9 +112,19 @@ const App: () => React$Node = () => {
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
               <Text>Category</Text>
-	            <View style={{display: "flex", flexDirection: "row"}}>
+	            <View style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
 		            {
-		              icons.map(icon => <Button key={icon.id} title={nodeEmoji.get(icon.icon)} />)
+		            	icons.map((icon, index) => (
+				            <TouchableHighlight
+					            key={icon.id}
+					            onPress={() => setCategory(index)}
+					            style={{flex: 1, minWidth: 50, maxWidth: 50, marginLeft: 10, marginRight: 10}}
+				            >
+					            <View style={{display: "flex", justifyContent: "center", textAlign: "center", backgroundColor: category === index ? "lightblue" : "white"}}>
+						            <Text style={{fontSize: 40, textAlign: "center"}}>{nodeEmoji.get(icon.icon)}</Text>
+					            </View>
+				            </TouchableHighlight>
+			            ))
 		            }
 	            </View>
             </View>
@@ -116,7 +146,11 @@ const App: () => React$Node = () => {
 	            />
             </View>
             <View style={styles.sectionContainer}>
-              <Text>Flags</Text>
+              <Text>Private</Text>
+	            <Switch
+		            onValueChange={onChangeIsPrivate}
+		            value={isPrivate}
+	            />
             </View>
             <View style={styles.sectionContainer}>
 	            <View style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
