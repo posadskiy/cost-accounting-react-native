@@ -1,20 +1,22 @@
 import React from 'react';
 import {
+	View,
   SafeAreaView,
-  ScrollView,
   StatusBar,
 } from 'react-native';
 
-import styles from './Styles';
 import AddPurchase from "./component/add_purchase/AddPurchase";
+import styles from "./Styles";
 
 const App = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{height: "100%"}}>
+	    <StatusBar barStyle="light-content"/>
+      <View style={styles.body}>
+	      <SafeAreaView style={{height: "100%"}}>
           <AddPurchase />
-      </SafeAreaView>
+	      </SafeAreaView>
+      </View>
     </>
   );
 };

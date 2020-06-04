@@ -120,32 +120,30 @@ const AddPurchase = () => {
 				/>
 			}
 		>
-			<View style={styles.body}>
-				<Category
-					categories={categories}
-					category={category}
-					setCategory={setCategory}
-				/>
-				<Name
-					name={name}
-					setName={setName}
-				/>
-				<Amount
-					amount={amount}
-					setAmount={setAmount}
-					currencies={currencies}
-					currency={currency}
-					setCurrency={setCurrency}
-				/>
-				<Flags
-					isPrivate={isPrivate}
-					setIsPrivate={setIsPrivate}
-				/>
-				<Buttons
-					save={sendPurchase}
-					clear={clearData}
-				/>
-			</View>
+			<Category
+				categories={categories}
+				category={category}
+				setCategory={setCategory}
+			/>
+			<Name
+				name={name}
+				setName={setName}
+			/>
+			<Amount
+				amount={amount}
+				setAmount={setAmount}
+				currencies={currencies}
+				currency={currency}
+				setCurrency={setCurrency}
+			/>
+			<Flags
+				isPrivate={isPrivate}
+				setIsPrivate={setIsPrivate}
+			/>
+			<Buttons
+				save={sendPurchase}
+				clear={clearData}
+			/>
 		</ScrollView>
 	)
 };
