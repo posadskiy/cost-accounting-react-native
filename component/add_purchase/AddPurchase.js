@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
 	View,
+	Alert,
 } from "react-native";
+import axios from 'axios';
 import styles from "../../Styles";
 import Category from "./Category";
 import Name from "./Name";
@@ -9,83 +11,80 @@ import Amount from "./Amount";
 import Flags from "./Flags";
 import Buttons from "./Buttons";
 
-/**
- * Category icons. Should be replaced to icons getting from back-end
- * @type {{}[]}
- */
-const icons = [
-	{
-		id: 0,
-		name: "Food",
-		icon: "shopping_trolley",
-	},
-	{
-		id: 1,
-		name: "Cafe",
-		icon: "knife_fork_plate",
-	},
-	{
-		id: 2,
-		name: "Office",
-		icon: "department_store",
-	},
-	{
-		id: 3,
-		name: "Transport",
-		icon: "bus",
-	},
-	{
-		id: 4,
-		name: "Fun",
-		icon: "tada",
-	},
-	{
-		id: 5,
-		name: "Travel",
-		icon: "earth_africa",
-	},
-	{
-		id: 6,
-		name: "Medicine",
-		icon: "pill",
-	},
-	{
-		id: 7,
-		name: "Clothes",
-		icon: "shopping_bags",
-	},
-	{
-		id: 8,
-		name: "Phone",
-		icon: "telephone_receiver",
-	},
-	{
-		id: 9,
-		name: "Medicine",
-		icon: "pill",
-	},
-	{
-		id: 10,
-		name: "Clothes",
-		icon: "shopping_bags",
-	},
-	{
-		id: 11,
-		name: "Phone",
-		icon: "telephone_receiver",
-	},
-];
-
 const AddPurchase = () => {
 	const [category, setCategory] = useState("");
 	const [name, setName] = useState("");
 	const [amount, setAmount] = useState("");
 	const [isPrivate, setIsPrivate] = useState(false);
+	const [categories, setCategories] = useState([]);
+	const [currencies, setCurrencies] = useState([]);
+	const [currency, setCurrency] = useState("BYN");
+	
+	const sendPurchase = () => {
+		console.log("saving...")
+		
+		const body = {
+			category: category.id,
+			name,
+			amount: amount.replace(",", "."),
+			currency,
+			isPrivate,
+		}
+		try {
+			axios.post("http://cost-accounting.posadskiy.com/purchase/add/5d7d5a461c9d440000cf0883",
+				JSON.stringify(body),
+				{
+					headers: {
+						'Content-Type': 'application/json;charset=utf-8'
+					}
+				})
+				.then(result => Alert.alert(
+					"Saved!",
+					"Thanks, your purchase successfully saved",
+					[{
+						text: "OK"
+					}]
+				))
+				.catch(error => Alert.alert(
+					"Oh, no...",
+					"Error happens, please, call to developers",
+					[{
+						text: "OK"
+					}]));
+		} catch(e) {
+			console.log(e);
+		}
+	}
+	
+	const receivePurchaseCategories = () => {
+		axios.get("http://cost-accounting.posadskiy.com/category/allPurchases",
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			})
+			.then(result => setCategories(result.data))
+			.catch(error => console.error(error));
+	}	
+	
+	const receiveCurrencies = () => {
+		axios.get("http://cost-accounting.posadskiy.com/purchase/currencies",
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			})
+			.then(result => setCurrencies(result.data))
+			.catch(error => console.error(error));
+	}
+	
+	useEffect(() => receivePurchaseCategories(), [categories.length]);
+	useEffect(() => receiveCurrencies(), [currencies.length]);
 
 	return (
 		<View style={styles.body}>
 			<Category
-				icons={icons}
+				categories={categories}
 				category={category}
 				setCategory={setCategory}
 			/>
@@ -96,12 +95,17 @@ const AddPurchase = () => {
 			<Amount
 				amount={amount}
 				setAmount={setAmount}
+				currencies={currencies}
+				currency={currency}
+				setCurrency={setCurrency}
 			/>
 			<Flags
 				isPrivate={isPrivate}
 				setIsPrivate={setIsPrivate}
 			/>
-			<Buttons />
+			<Buttons
+				onSave={sendPurchase}
+			/>
 		</View>
 	)
 };

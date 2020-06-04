@@ -9,7 +9,7 @@ import styles from "../../Styles";
 const Flags = ({isPrivate, setIsPrivate}) => {
 	return (
 		<View style={styles.sectionContainer}>
-			<Text>Private</Text>
+			<Text style={styles.headersText}>Private</Text>
 			<Switch
 				onValueChange={setIsPrivate}
 				value={isPrivate}

@@ -5,7 +5,7 @@ import {
 } from "react-native";
 import styles from "../../Styles";
 
-const Buttons = () => {
+const Buttons = ({onSave}) => {
 	return (
 		<View style={styles.sectionContainer}>
 			<View style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
@@ -14,6 +14,7 @@ const Buttons = () => {
 					style={{flex: 1}}
 				/>
 				<Button
+					onPress={onSave}
 					title="Save"
 					style={{flex: 1}}
 				/>
