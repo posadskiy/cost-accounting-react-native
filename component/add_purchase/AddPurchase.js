@@ -3,6 +3,7 @@ import {
 	View,
 	Alert,
 	ScrollView,
+	RefreshControl,
 } from "react-native";
 import axios from 'axios';
 import styles from "../../Styles";
@@ -12,6 +13,12 @@ import Amount from "./Amount";
 import Flags from "./Flags";
 import Buttons from "./Buttons";
 
+function wait(timeout) {
+	return new Promise(resolve => {
+		setTimeout(resolve, timeout);
+	});
+}
+
 const AddPurchase = () => {
 	const [category, setCategory] = useState("");
 	const [name, setName] = useState("");
@@ -20,6 +27,7 @@ const AddPurchase = () => {
 	const [categories, setCategories] = useState([]);
 	const [currencies, setCurrencies] = useState([]);
 	const [currency, setCurrency] = useState("BYN");
+	const [refreshing, setRefreshing] = useState(false);
 	
 	const clearData = () => {
 		setCategory("");
@@ -86,6 +94,15 @@ const AddPurchase = () => {
 			.then(result => setCurrencies(result.data))
 			.catch(error => console.error(error));
 	}
+
+	const onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+
+		receivePurchaseCategories();
+		receiveCurrencies();
+
+		wait(2000).then(() => setRefreshing(false));
+	}, [refreshing]);
 	
 	useEffect(() => receivePurchaseCategories(), [categories.length]);
 	useEffect(() => receiveCurrencies(), [currencies.length]);
@@ -93,7 +110,16 @@ const AddPurchase = () => {
 	return (
 		<ScrollView
 			contentInsetAdjustmentBehavior="automatic"
-			style={styles.scrollView}>
+			style={styles.scrollView}
+			refreshControl={
+				<RefreshControl 
+					refreshing={refreshing} 
+					onRefresh={onRefresh}
+					titleColor="white"
+					title="Refreshing categories and currencies..."
+				/>
+			}
+		>
 			<View style={styles.body}>
 				<Category
 					categories={categories}
