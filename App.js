@@ -13,11 +13,7 @@ const App = () => {
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={{height: "100%"}}>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
           <AddPurchase />
-        </ScrollView>
       </SafeAreaView>
     </>
   );

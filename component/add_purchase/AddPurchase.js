@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {
 	View,
 	Alert,
+	ScrollView,
 } from "react-native";
 import axios from 'axios';
 import styles from "../../Styles";
@@ -20,6 +21,14 @@ const AddPurchase = () => {
 	const [currencies, setCurrencies] = useState([]);
 	const [currency, setCurrency] = useState("BYN");
 	
+	const clearData = () => {
+		setCategory("");
+		setName("");
+		setAmount("");
+		setCurrency("BYN");
+		setIsPrivate(false);
+	}
+
 	const sendPurchase = () => {
 		console.log("saving...")
 		
@@ -82,31 +91,36 @@ const AddPurchase = () => {
 	useEffect(() => receiveCurrencies(), [currencies.length]);
 
 	return (
-		<View style={styles.body}>
-			<Category
-				categories={categories}
-				category={category}
-				setCategory={setCategory}
-			/>
-			<Name
-				name={name}
-				setName={setName}
-			/>
-			<Amount
-				amount={amount}
-				setAmount={setAmount}
-				currencies={currencies}
-				currency={currency}
-				setCurrency={setCurrency}
-			/>
-			<Flags
-				isPrivate={isPrivate}
-				setIsPrivate={setIsPrivate}
-			/>
-			<Buttons
-				onSave={sendPurchase}
-			/>
-		</View>
+		<ScrollView
+			contentInsetAdjustmentBehavior="automatic"
+			style={styles.scrollView}>
+			<View style={styles.body}>
+				<Category
+					categories={categories}
+					category={category}
+					setCategory={setCategory}
+				/>
+				<Name
+					name={name}
+					setName={setName}
+				/>
+				<Amount
+					amount={amount}
+					setAmount={setAmount}
+					currencies={currencies}
+					currency={currency}
+					setCurrency={setCurrency}
+				/>
+				<Flags
+					isPrivate={isPrivate}
+					setIsPrivate={setIsPrivate}
+				/>
+				<Buttons
+					save={sendPurchase}
+					clear={clearData}
+				/>
+			</View>
+		</ScrollView>
 	)
 };
 
