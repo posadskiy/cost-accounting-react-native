@@ -55,13 +55,17 @@ const AddPurchase = () => {
 						'Content-Type': 'application/json;charset=utf-8'
 					}
 				})
-				.then(result => Alert.alert(
-					"Saved!",
-					"Thanks, your purchase successfully saved",
-					[{
-						text: "OK"
-					}]
-				))
+				.then(result => {
+					Alert.alert(
+							"Saved!",
+							"Thanks, your purchase successfully saved",
+							[{
+								text: "OK"
+							}]
+						);
+					clearData();
+					}
+				)
 				.catch(error => Alert.alert(
 					"Oh, no...",
 					"Error happens, please, call to developers",
