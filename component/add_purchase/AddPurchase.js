@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {
-	View,
 	Alert,
 	ScrollView,
 	RefreshControl,
@@ -36,8 +35,43 @@ const AddPurchase = () => {
 		setCurrency("BYN");
 		setIsPrivate(false);
 	}
+	
+	const validate = () => {
+		const result = [
+			validateCategory(),
+			validateName(),
+			validateAmount(),
+		];
+		
+		console.log(result);
+		return result.find(value => !value) !== false;
+	}
+	
+	const validateCategory = () => {
+		return !!category;
+	}
+	
+	const validateName = () => {
+		return !!name;
+	}
+	
+	const validateAmount = () => {
+		return !!amount;
+	}
 
 	const sendPurchase = () => {
+		console.log("start")
+		const isValidated = validate();
+		if (!isValidated) {
+			Alert.alert(
+				"That's problem...",
+				"Please, fill all field. Thank you!",
+				[{
+					text: "Got it!"
+				}]
+			);
+			return;
+		}
 		console.log("saving...")
 		
 		const body = {
