@@ -22,10 +22,9 @@ const Category = ({categories, category, setCategory}) => {
 						<TouchableHighlight
 							key={category.id}
 							onPress={() => setCategory(category)}
-							style={{flex: 1, minWidth: 50, maxWidth: 50, marginLeft: 10, marginRight: 10}}
 						>
-							<View style={[isCurrentCategory(category.id) ? styles.grayIcon : styles.blackIcon, {display: "flex", justifyContent: "center", textAlign: "center"}]}>
-								<Text style={{fontSize: 40, textAlign: "center"}}>{category.emoji}</Text>
+							<View style={[isCurrentCategory(category.id) ? styles.grayIcon : styles.blackIcon, styles.categoryItem]}>
+								<Text style={styles.categoryItemText}>{category.emoji}</Text>
 							</View>
 						</TouchableHighlight>
 					))
