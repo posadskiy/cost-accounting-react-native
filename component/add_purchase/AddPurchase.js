@@ -12,6 +12,7 @@ import Amount from "./Amount";
 import Flags from "./Flags";
 import Buttons from "./Buttons";
 import DatePicker from "./DatePicker";
+import Currency from "./Currency";
 
 function wait(timeout) {
 	return new Promise(resolve => {
@@ -177,6 +178,8 @@ const AddPurchase = () => {
 			<Amount
 				amount={amount}
 				setAmount={setAmount}
+			/>
+			<Currency
 				currencies={currencies}
 				currency={currency}
 				setCurrency={setCurrency}

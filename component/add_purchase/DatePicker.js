@@ -1,11 +1,10 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import styles from "../../Styles";
 import {
 	Text,
 	View,
 	Button,
 } from "react-native";
-import React from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const DatePicker = ({date, setDate}) => {
