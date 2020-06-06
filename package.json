@@ -10,7 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/picker": "^1.6.1",
+    "@react-native-community/datetimepicker": "2.4.0",
+    "@react-native-community/picker": "1.6.1",
     "axios": "0.19.2",
     "react": "16.11.0",
     "react-native": "0.62.2"

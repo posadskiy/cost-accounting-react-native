@@ -11,6 +11,7 @@ import Name from "./Name";
 import Amount from "./Amount";
 import Flags from "./Flags";
 import Buttons from "./Buttons";
+import DatePicker from "./DatePicker";
 
 function wait(timeout) {
 	return new Promise(resolve => {
@@ -22,6 +23,7 @@ const AddPurchase = () => {
 	const [category, setCategory] = useState("");
 	const [name, setName] = useState("");
 	const [amount, setAmount] = useState("");
+	const [date, setDate] = useState(new Date());
 	const [isPrivate, setIsPrivate] = useState(false);
 	const [categories, setCategories] = useState([]);
 	const [currencies, setCurrencies] = useState([]);
@@ -33,6 +35,7 @@ const AddPurchase = () => {
 		setName("");
 		setAmount("");
 		setCurrency("BYN");
+		setDate(new Date());
 		setIsPrivate(false);
 	}
 	
@@ -41,9 +44,9 @@ const AddPurchase = () => {
 			validateCategory(),
 			validateName(),
 			validateAmount(),
+			validateDate(),
 		];
 		
-		console.log(result);
 		return result.find(value => !value) !== false;
 	}
 	
@@ -58,9 +61,12 @@ const AddPurchase = () => {
 	const validateAmount = () => {
 		return !!amount;
 	}
+	
+	const validateDate = () => {
+		return !!date;
+	}
 
 	const sendPurchase = () => {
-		console.log("start")
 		const isValidated = validate();
 		if (!isValidated) {
 			Alert.alert(
@@ -79,6 +85,7 @@ const AddPurchase = () => {
 			name,
 			amount: amount.replace(",", "."),
 			currency,
+			date,
 			isPrivate,
 		}
 		try {
@@ -173,6 +180,10 @@ const AddPurchase = () => {
 				currencies={currencies}
 				currency={currency}
 				setCurrency={setCurrency}
+			/>
+			<DatePicker
+				date={date}
+				setDate={setDate}
 			/>
 			<Flags
 				isPrivate={isPrivate}
