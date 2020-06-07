@@ -7,7 +7,7 @@ import styles from "../../Styles";
 
 const Chart = () => {
 	return (
-		<View>
+		<View style={styles.sectionContainer}>
 			<Text style={styles.headersText}>Under developing</Text>
 		</View>
 	)

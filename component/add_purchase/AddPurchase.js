@@ -14,6 +14,8 @@ import Buttons from "./Buttons";
 import DatePicker from "./DatePicker";
 import Currency from "./Currency";
 
+import {URL, url} from '../../common/URL';
+
 function wait(timeout) {
 	return new Promise(resolve => {
 		setTimeout(resolve, timeout);
@@ -90,7 +92,7 @@ const AddPurchase = () => {
 			isPrivate,
 		}
 		try {
-			axios.post("http://cost-accounting.posadskiy.com/purchase/add/5d7d5a461c9d440000cf0883",
+			axios.post(url(URL.addPurchase("5d7d5a461c9d440000cf0883")),
 				JSON.stringify(body),
 				{
 					headers: {
@@ -120,7 +122,7 @@ const AddPurchase = () => {
 	}
 	
 	const receivePurchaseCategories = () => {
-		axios.get("http://cost-accounting.posadskiy.com/category/allPurchases",
+		axios.get(url(URL.getCategories),
 			{
 				headers: {
 					'Content-Type': 'application/json'
@@ -131,7 +133,7 @@ const AddPurchase = () => {
 	}	
 	
 	const receiveCurrencies = () => {
-		axios.get("http://cost-accounting.posadskiy.com/purchase/currencies",
+		axios.get(url(URL.getCurrencies),
 			{
 				headers: {
 					'Content-Type': 'application/json'

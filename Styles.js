@@ -26,6 +26,12 @@ const styles = StyleSheet.create({
 		fontSize: SmallPhone() ? 14 : 20,
 		fontWeight: "700",
 	},
+	generalText: {
+		color: Colors.lighter,
+		fontSize: SmallPhone() ? 11 : 16,
+		fontWeight: "400",
+		textAlign: "left",
+	},
 	categoryItem: {
 		display: "flex",
 		justifyContent: "center",
