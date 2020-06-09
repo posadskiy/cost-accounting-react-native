@@ -20,6 +20,7 @@ const ColorTheme = {
 
 import Menu from "./component/menu/Menu";
 import styles from "./Styles";
+import Login from "./component/login/Login";
 
 const App = () => {
   return (
@@ -27,9 +28,11 @@ const App = () => {
 	    <StatusBar barStyle="light-content"/>
       <View style={styles.body}>
 	      <SafeAreaView style={{height: "100%"}}>
-		      <NavigationContainer theme={ColorTheme}>
-			      <Menu />
-		      </NavigationContainer>
+		      <Login>
+			      <NavigationContainer theme={ColorTheme}>
+				      <Menu />
+			      </NavigationContainer>
+		      </Login>
 	      </SafeAreaView>
       </View>
     </>

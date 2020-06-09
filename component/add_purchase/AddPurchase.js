@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
 	Alert,
 	ScrollView,
@@ -15,6 +15,7 @@ import DatePicker from "./DatePicker";
 import Currency from "./Currency";
 
 import {URL, url} from '../../common/URL';
+import {UserContext} from "../login/Login";
 
 function wait(timeout) {
 	return new Promise(resolve => {
@@ -32,6 +33,7 @@ const AddPurchase = () => {
 	const [currencies, setCurrencies] = useState([]);
 	const [currency, setCurrency] = useState("BYN");
 	const [refreshing, setRefreshing] = useState(false);
+  const user = useContext(UserContext);
 	
 	const clearData = () => {
 		setCategory("");
@@ -92,7 +94,7 @@ const AddPurchase = () => {
 			isPrivate,
 		}
 		try {
-			axios.post(url(URL.addPurchase("5d7d5a461c9d440000cf0883")),
+			axios.post(url(URL.addPurchase(user.id)),
 				JSON.stringify(body),
 				{
 					headers: {

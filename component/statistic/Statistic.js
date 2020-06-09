@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 
 import {
 	RefreshControl, ScrollView,
@@ -8,6 +8,7 @@ import {
 import styles from "../../Styles";
 import axios from "axios";
 import {URL, url} from "../../common/URL";
+import {UserContext} from "../login/Login";
 
 function wait(timeout) {
 	return new Promise(resolve => {
@@ -30,6 +31,7 @@ const Statistic = () => {
 	const [refreshing, setRefreshing] = useState(false);
 	const [purchases, setPurchases] = useState([]);
 	const [incomes, setIncomes] = useState([]);
+  const user = useContext(UserContext);
 
 	const onRefresh = React.useCallback(() => {
 		setRefreshing(true);
@@ -42,7 +44,7 @@ const Statistic = () => {
 
 
 	const receiveLastPurchases = () => {
-		axios.get(url(URL.getLastPurchases("5d7d5a461c9d440000cf0883")),
+		axios.get(url(URL.getLastPurchases(user.id)),
 			{
 				headers: {
 					'Content-Type': 'application/json'
@@ -52,7 +54,7 @@ const Statistic = () => {
 			.catch(error => console.error(error));
 	}
 	const receiveLastIncomes = () => {
-		axios.get(url(URL.getLastIncomes("5d7d5a461c9d440000cf0883")),
+		axios.get(url(URL.getLastIncomes(user.id)),
 			{
 				headers: {
 					'Content-Type': 'application/json'
