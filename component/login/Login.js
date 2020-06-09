@@ -52,7 +52,7 @@ const Login = ({children}) => {
       }
     }
     login();
-  }, [state.user])
+  }, [dispatch])
   
   console.log(state);
 
