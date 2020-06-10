@@ -11,6 +11,8 @@ const URL = {
 	getCategories: 'category/allPurchases',
 	getLastPurchases: (userId) => `statistic/${userId}/lastPurchases`,
 	getLastIncomes: (userId) => `statistic/${userId}/lastIncomes`,
+  deletePurchase: (userId, purchaseId) => `purchase/delete/${purchaseId}/${userId}`,
+  deleteIncome: (userId, purchaseId) => `income/delete/${purchaseId}/${userId}`,
   getStatisticEvents: 'statistic/event',
 	login: 'login/auth',
 }

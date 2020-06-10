@@ -12,7 +12,6 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  console.log("ac", action)
   switch (action.type) {
     case 'set_initial_data':
       return action.data;
@@ -53,8 +52,6 @@ const Login = ({children}) => {
     }
     login();
   }, [dispatch])
-  
-  console.log(state);
 
   const login = useCallback(() => {
     const user = {
@@ -71,7 +68,7 @@ const Login = ({children}) => {
         dispatch({type: 'auth_success', data: response.data})
       })
       .catch(error => dispatch({type: 'auth_error', error}));
-  }, []);
+  }, [email, password]);
 
   const onClear = () => {
     clear();
