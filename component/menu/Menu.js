@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import AddPurchase from "../add_purchase/AddPurchase";
+import AddIncome from "../add_income/AddIncome";
 import Statistic from "../statistic/Statistic";
 import Chart from "../chart/Chart";
 
@@ -19,12 +20,23 @@ const Menu = () => {
 		>
 			<Tab.Screen
 				style={{backgroundColor: "black", color: "gray"}}
-				name="Add"
+				name="AddPurchase"
 				component={AddPurchase}
 				options={{
 					tabBarLabel: 'Purchase',
 					tabBarIcon: ({ color, size }) => (
 						<Icon name="cart-plus" size={size} color={color} />
+					),
+				}}
+			/>
+			<Tab.Screen
+				style={{backgroundColor: "black", color: "gray"}}
+				name="AddIncome"
+				component={AddIncome}
+				options={{
+					tabBarLabel: 'Income',
+					tabBarIcon: ({ color, size }) => (
+						<Icon name="money" size={size} color={color} />
 					),
 				}}
 			/>

@@ -6,13 +6,13 @@ import {
 } from "react-native";
 import axios from 'axios';
 import styles from "../../Styles";
-import Category from "./Category";
-import Name from "./Name";
-import Amount from "./Amount";
-import Flags from "./Flags";
-import Buttons from "./Buttons";
-import DatePicker from "./DatePicker";
-import Currency from "./Currency";
+import Category from "../add_purchase/Category";
+import Name from "../add_purchase/Name";
+import Amount from "../add_purchase/Amount";
+import Flags from "../add_purchase/Flags";
+import Buttons from "../add_purchase/Buttons";
+import DatePicker from "../add_purchase/DatePicker";
+import Currency from "../add_purchase/Currency";
 
 import {URL, url} from '../../common/URL';
 import {UserContext} from "../login/Login";
@@ -23,7 +23,7 @@ function wait(timeout) {
 	});
 }
 
-const AddPurchase = () => {
+const AddIncome = () => {
 	const [category, setCategory] = useState("");
 	const [name, setName] = useState("");
 	const [amount, setAmount] = useState("");
@@ -94,7 +94,7 @@ const AddPurchase = () => {
 			isPrivate,
 		}
 		try {
-			axios.post(url(URL.addPurchase(user.id)),
+			axios.post(url(URL.addIncome(user.id)),
 				JSON.stringify(body),
 				{
 					headers: {
@@ -104,7 +104,7 @@ const AddPurchase = () => {
 				.then(result => {
 					Alert.alert(
 							"Saved!",
-							"Thanks, your purchase successfully saved",
+							"Thanks, your income successfully saved",
 							[{
 								text: "OK"
 							}]
@@ -123,8 +123,8 @@ const AddPurchase = () => {
 		}
 	}
 	
-	const receivePurchaseCategories = () => {
-		axios.get(url(URL.getPurchaseCategories),
+	const receiveIncomeCategories = () => {
+		axios.get(url(URL.getIncomeCategories),
 			{
 				headers: {
 					'Content-Type': 'application/json'
@@ -148,13 +148,13 @@ const AddPurchase = () => {
 	const onRefresh = React.useCallback(() => {
 		setRefreshing(true);
 
-		receivePurchaseCategories();
+		receiveIncomeCategories();
 		receiveCurrencies();
 
 		wait(2000).then(() => setRefreshing(false));
 	}, [refreshing]);
 	
-	useEffect(() => receivePurchaseCategories(), [categories.length]);
+	useEffect(() => receiveIncomeCategories(), [categories.length]);
 	useEffect(() => receiveCurrencies(), [currencies.length]);
 
 	return (
@@ -204,4 +204,4 @@ const AddPurchase = () => {
 	)
 };
 
-export default AddPurchase;
+export default AddIncome;

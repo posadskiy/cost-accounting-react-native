@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
 		marginBottom: SmallPhone() ? 3 : 5,
 	},
 	categoryItemText: {
+	  color: "white",
 		fontSize: SmallPhone() ? 35 : 40,
 		textAlign: "center",
 	},
