@@ -2,6 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 
 import {
   View,
+  Text,
 } from 'react-native';
 import styles from "../../Styles";
 import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
@@ -61,7 +62,7 @@ const Chart = () => {
   const data = [
     {
       data: amounts,
-      svg: { stroke: 'green' },
+      svg: { stroke: 'lightgreen' },
     },
     {
       data: todayLimits,
@@ -81,6 +82,12 @@ const Chart = () => {
 
   console.log(categories);
   return (
+    <>
+    <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
+      <Text style={[styles.generalText, {color: 'lightgreen'}]}>Current spent</Text>
+      <Text style={[styles.generalText, {color: 'yellow'}]}>Limit on today</Text>
+      <Text style={[styles.generalText, {color: 'red'}]}>Month limit</Text>
+    </View>
     <View style={{ height: 300, padding: 20, flexDirection: 'row' }}>
       <YAxis
         data={xData}
@@ -107,6 +114,7 @@ const Chart = () => {
         />
       </View>
     </View>
+  </>
   )
 }
 
