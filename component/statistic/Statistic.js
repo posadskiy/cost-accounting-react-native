@@ -33,7 +33,7 @@ const Statistic = () => {
       month: new Date().getMonth() + 1,
     });
 
-		axios.post(url(URL.STATISTIC.events), body,
+		axios.post(url(URL.STATISTICS.events), body,
 			{
 				headers: {
 					'Content-Type': 'application/json'

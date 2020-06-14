@@ -18,8 +18,11 @@ const URL = {
   CURRENCIES: {
     all: 'currency/all',
   },
-  STATISTIC: {
-    events: 'statistic/events'
+  STATISTICS: {
+    events: 'statistics/events',
+    month: 'statistics/month',
+    monthPurchaseTotal: 'statistics/monthPurchaseTotal',
+    monthIncomeTotal: 'statistics/monthIncomeTotal',
   },
   LOGIN: {
     login: 'login/auth',

@@ -12,7 +12,13 @@ const Event = ({event}) => {
   const moneyActionTypeString = isIncome ? "income" : "purchase";
 
   const deleteEvent = useCallback(() => {
-    axios.get(url(isIncome ? URL.deleteIncome(user.id, event.id) : URL.deletePurchase(user.id, event.id)), {
+    const body = JSON.stringify({
+      userId: user.id,
+      purchaseId: event.id,
+      incomeId: event.id,
+    });
+
+    axios.get(url(isIncome ? URL.INCOME.delete: URL.PURCHASE.delete), body, {
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
