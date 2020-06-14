@@ -58,7 +58,7 @@ const Login = ({children}) => {
       email: email.toLowerCase(),
       password: hmacSha256(password, '$!@#$%$#@').toString(),
     };
-    axios.post(url(URL.login), JSON.stringify(user), {
+    axios.post(url(URL.LOGIN.login), JSON.stringify(user), {
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },

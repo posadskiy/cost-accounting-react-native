@@ -5,18 +5,26 @@ const mode = LOCAL;
 const LOCAL_SERVER = "http://localhost:8080/";
 const PRODUCTION_SERVER = "https://cost-accounting.posadskiy.com/";
 const URL = {
-	addPurchase: (userId) => `purchase/add/${userId}`,
-	addIncome: (userId) => `income/add/${userId}`,
-	getCurrencies: 'purchase/currencies',
-	getPurchaseCategories: 'category/allPurchases',
-	getIncomeCategories: 'category/allIncomes',
-	getLastPurchases: (userId) => `statistic/${userId}/lastPurchases`,
-	getLastIncomes: (userId) => `statistic/${userId}/lastIncomes`,
-  deletePurchase: (userId, purchaseId) => `purchase/delete/${purchaseId}/${userId}`,
-  deleteIncome: (userId, purchaseId) => `income/delete/${purchaseId}/${userId}`,
-  getStatisticEvents: 'statistic/event',
-	login: 'login/auth',
-}
+  PURCHASE: {
+    add: 'purchase/add',
+    delete: 'purchase/delete',
+    categories: 'purchase/categories'
+  },
+  INCOME: {
+    add: 'income/add',
+    delete: 'income/delete',
+    categories: 'income/categories'
+  },
+  CURRENCIES: {
+    all: 'currency/all',
+  },
+  STATISTIC: {
+    events: 'statistic/events'
+  },
+  LOGIN: {
+    login: 'login/auth',
+  },
+};
 
 const url = (url) => {
 	let server;

@@ -27,13 +27,13 @@ const Statistic = () => {
 	}, [refreshing]);
 
 	const receiveEvents = () => {
-	  const body = {
+	  const body = JSON.stringify({
 	    userId: user.id,
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
-    };
-		axios.post(url(URL.getStatisticEvents),
-      JSON.stringify(body),
+    });
+
+		axios.post(url(URL.STATISTIC.events), body,
 			{
 				headers: {
 					'Content-Type': 'application/json'

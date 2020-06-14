@@ -85,46 +85,50 @@ const AddPurchase = () => {
 		}
 		console.log("saving...")
 		
-		const body = {
-			category: category.id,
-			name,
-			amount: amount.replace(",", "."),
-			currency,
-			date,
-			isPrivate,
-		}
-		try {
-			axios.post(url(URL.addPurchase(user.id)),
-				JSON.stringify(body),
-				{
-					headers: {
-						'Content-Type': 'application/json;charset=utf-8'
-					}
-				})
-				.then(result => {
-					Alert.alert(
-							"Saved!",
-							"Thanks, your purchase successfully saved",
-							[{
-								text: "OK"
-							}]
-						);
-					clearData();
-					}
-				)
-				.catch(error => Alert.alert(
-					"Oh, no...",
-					"Error happens, please, call to developers",
-					[{
-						text: "OK"
-					}]));
-		} catch(e) {
-			console.log(e);
-		}
+		const body = JSON.stringify({
+		  userId: user.id,
+		  purchase: {
+        category: category.id,
+        name,
+        amount: amount.replace(",", "."),
+        currency,
+        date,
+        isPrivate,
+      },
+		});
+
+    axios.post(url(URL.PURCHASE.add),
+      body,
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      })
+      .then(result => {
+        Alert.alert(
+            "Saved!",
+            "Thanks, your purchase successfully saved",
+            [{
+              text: "OK"
+            }]
+          );
+        clearData();
+        }
+      )
+      .catch(error => Alert.alert(
+        "Oh, no...",
+        "Error happens, please, call to developers",
+        [{
+          text: "OK"
+        }]));
 	}
 	
 	const receivePurchaseCategories = () => {
-		axios.get(url(URL.getPurchaseCategories),
+	  const body = JSON.stringify({
+	    userId: user.id,
+    });
+
+		axios.post(url(URL.PURCHASE.categories), body,
 			{
 				headers: {
 					'Content-Type': 'application/json'
@@ -135,7 +139,7 @@ const AddPurchase = () => {
 	}	
 	
 	const receiveCurrencies = () => {
-		axios.get(url(URL.getCurrencies),
+		axios.get(url(URL.CURRENCIES.all),
 			{
 				headers: {
 					'Content-Type': 'application/json'

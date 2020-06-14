@@ -85,46 +85,49 @@ const AddIncome = () => {
 		}
 		console.log("saving...")
 		
-		const body = {
-			category: category.id,
-			name,
-			amount: amount.replace(",", "."),
-			currency,
-			date,
-			isPrivate,
-		}
-		try {
-			axios.post(url(URL.addIncome(user.id)),
-				JSON.stringify(body),
-				{
-					headers: {
-						'Content-Type': 'application/json;charset=utf-8'
-					}
-				})
-				.then(result => {
-					Alert.alert(
-							"Saved!",
-							"Thanks, your income successfully saved",
-							[{
-								text: "OK"
-							}]
-						);
-					clearData();
-					}
-				)
-				.catch(error => Alert.alert(
-					"Oh, no...",
-					"Error happens, please, call to developers",
-					[{
-						text: "OK"
-					}]));
-		} catch(e) {
-			console.log(e);
-		}
+		const body = JSON.stringify({
+		  userId: user.id,
+			income: {
+        category: category.id,
+        name,
+        amount: amount.replace(",", "."),
+        currency,
+        date,
+        isPrivate,
+      },
+		});
+
+    axios.post(url(URL.INCOME.add), body,
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      })
+      .then(result => {
+        Alert.alert(
+            "Saved!",
+            "Thanks, your income successfully saved",
+            [{
+              text: "OK"
+            }]
+          );
+        clearData();
+        }
+      )
+      .catch(error => Alert.alert(
+        "Oh, no...",
+        "Error happens, please, call to developers",
+        [{
+          text: "OK"
+        }]));
 	}
 	
 	const receiveIncomeCategories = () => {
-		axios.get(url(URL.getIncomeCategories),
+	  const body = JSON.stringify({
+      userId: user.id,
+    });
+
+		axios.post(url(URL.INCOME.categories), body,
 			{
 				headers: {
 					'Content-Type': 'application/json'
@@ -135,7 +138,7 @@ const AddIncome = () => {
 	}	
 	
 	const receiveCurrencies = () => {
-		axios.get(url(URL.getCurrencies),
+		axios.get(url(URL.CURRENCIES.all),
 			{
 				headers: {
 					'Content-Type': 'application/json'
