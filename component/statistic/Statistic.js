@@ -13,15 +13,28 @@ function wait(timeout) {
 	});
 }
 
+const defaultCategory = {
+  amount: 0,
+  limit: 0,
+}
+
 const Statistic = () => {
 	const [refreshing, setRefreshing] = useState(false);
 	const [events, setEvents] = useState([]);
+	const [monthPurchasesTotal, setMonthPurchasesTotal] = useState(defaultCategory);
+	const [monthIncomesTotal, setMonthIncomesTotal] = useState(defaultCategory);
+  const [monthPurchasesTotalForUser, setMonthPurchasesTotalForUser] = useState(defaultCategory);
+  const [monthIncomesTotalForUser, setMonthIncomesTotalForUser] = useState(defaultCategory);
   const user = useContext(UserContext);
 
 	const onRefresh = React.useCallback(() => {
 		setRefreshing(true);
 
 		receiveEvents();
+		receiveMonthPurchasesTotal();
+		receiveMonthIncomesTotal();
+		receiveMonthPurchasesTotalForUser();
+		receiveMonthIncomesTotalForUser();
 
 		wait(2000).then(() => setRefreshing(false));
 	}, [refreshing]);
@@ -42,6 +55,74 @@ const Statistic = () => {
 			.then(result => setEvents(mapEvents(result.data)))
 			.catch(error => console.error(error));
 	}
+
+	const receiveMonthPurchasesTotal = () => {
+	  const body = JSON.stringify({
+	    userId: user.id,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+    });
+
+		axios.post(url(URL.STATISTICS.monthPurchaseTotal), body,
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			})
+			.then(result => setMonthPurchasesTotal(result.data))
+			.catch(error => console.error(error));
+	}
+	
+	const receiveMonthIncomesTotal = () => {
+	  const body = JSON.stringify({
+	    userId: user.id,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+    });
+
+		axios.post(url(URL.STATISTICS.monthIncomeTotal), body,
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			})
+			.then(result => setMonthIncomesTotal(result.data))
+			.catch(error => console.error(error));
+	}
+	
+	const receiveMonthPurchasesTotalForUser = () => {
+	  const body = JSON.stringify({
+	    userId: user.id,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+    });
+
+		axios.post(url(URL.STATISTICS.monthPurchaseTotalForUser), body,
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			})
+			.then(result => setMonthPurchasesTotalForUser(result.data))
+			.catch(error => console.error(error));
+	}
+	
+	const receiveMonthIncomesTotalForUser = () => {
+	  const body = JSON.stringify({
+	    userId: user.id,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+    });
+
+		axios.post(url(URL.STATISTICS.monthIncomeTotalForUser), body,
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			})
+			.then(result => setMonthIncomesTotalForUser(result.data))
+			.catch(error => console.error(error));
+	}
 	
 	const mapEvents = (events) => Object.keys(events).map((key, index) => {
     return {
@@ -60,8 +141,13 @@ const Statistic = () => {
   }
 
 	useEffect(() => receiveEvents(), [events.length]);
+	useEffect(() => receiveMonthPurchasesTotal(), [monthPurchasesTotal.month]);
+	useEffect(() => receiveMonthIncomesTotal(), [monthIncomesTotal.month]);
+	useEffect(() => receiveMonthPurchasesTotalForUser(), [monthPurchasesTotalForUser.amount]);
+	useEffect(() => receiveMonthIncomesTotalForUser(), [monthIncomesTotalForUser.amount]);
 
-  console.log(events);
+  const purchasesTotal = `${monthPurchasesTotalForUser.amount.toFixed(0)}$ / ${monthPurchasesTotal.amount.toFixed(0)}$ / ${monthPurchasesTotal.limit.toFixed(0)}$`;
+  const incomesTotal = `${monthIncomesTotalForUser.amount.toFixed(0)}$ / ${monthIncomesTotal.amount.toFixed(0)}$ / ${monthIncomesTotal.limit.toFixed(0)}$`;
 	return (
 		<ScrollView
 			contentInsetAdjustmentBehavior="automatic"
@@ -76,7 +162,10 @@ const Statistic = () => {
 			}
 		>
 			<View style={styles.sectionContainer}>
-				<Text style={styles.headersText}>Events</Text>
+        <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+          <Text style={[styles.headersText, {color: "lightcoral"}]}>{purchasesTotal}</Text>
+          <Text style={[styles.headersText, {color: "greenyellow"}]}>{incomesTotal}</Text>
+        </View>
         <SectionList
           sections={events}
           keyExtractor={(item, index) => item + index}

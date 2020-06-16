@@ -21,8 +21,11 @@ const URL = {
   STATISTICS: {
     events: 'statistics/events',
     month: 'statistics/month',
+    monthForUser: 'statistics/monthForUser',
     monthPurchaseTotal: 'statistics/monthPurchaseTotal',
     monthIncomeTotal: 'statistics/monthIncomeTotal',
+    monthPurchaseTotalForUser: 'statistics/monthPurchaseTotalForUser',
+    monthIncomeTotalForUser: 'statistics/monthIncomeTotalForUser',
   },
   LOGIN: {
     login: 'login/auth',
