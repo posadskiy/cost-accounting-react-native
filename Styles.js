@@ -37,6 +37,18 @@ const styles = StyleSheet.create({
 		fontSize: SmallPhone() ? 11 : 16,
 		fontWeight: "400",
 		textAlign: "right",
+	},  
+  purchaseTextRight: {
+    color: "lightcoral",
+		fontSize: SmallPhone() ? 11 : 16,
+		fontWeight: "400",
+		textAlign: "right",
+	},  
+  incomeTextRight: {
+    color: "greenyellow",
+		fontSize: SmallPhone() ? 11 : 16,
+		fontWeight: "400",
+		textAlign: "right",
 	},
   eventDate: {
     color: Colors.lighter,
@@ -91,7 +103,7 @@ const styles = StyleSheet.create({
 	sectionContainer: {
 		color: Colors.lighter,
 		marginTop: SmallPhone() ? 16 : 32,
-		paddingHorizontal: 24,
+		paddingHorizontal: 10,
 	},
 });
 
