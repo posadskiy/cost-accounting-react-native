@@ -147,7 +147,7 @@ const Statistic = () => {
 	useEffect(() => receiveMonthIncomesTotalForUser(), [monthIncomesTotalForUser.amount]);
 
   const purchasesTotal = `${monthPurchasesTotalForUser.amount.toFixed(0)}$ / ${monthPurchasesTotal.amount.toFixed(0)}$ / ${monthPurchasesTotal.limit.toFixed(0)}$`;
-  const incomesTotal = `${monthIncomesTotalForUser.amount.toFixed(0)}$ / ${monthIncomesTotal.amount.toFixed(0)}$ / ${monthIncomesTotal.limit.toFixed(0)}$`;
+  const incomesTotal = `${monthIncomesTotalForUser.amount.toFixed(0)}$ / ${monthIncomesTotal.amount.toFixed(0)}$`;
 	return (
 		<ScrollView
 			contentInsetAdjustmentBehavior="automatic"
