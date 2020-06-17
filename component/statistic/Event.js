@@ -18,7 +18,7 @@ const Event = ({event}) => {
       incomeId: event.id,
     });
 
-    axios.post(url(isIncome ? URL.INCOME.delete: URL.PURCHASE.delete), body, {
+    axios.post(url(isIncome ? URL.INCOME.delete : URL.PURCHASE.delete), body, {
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },

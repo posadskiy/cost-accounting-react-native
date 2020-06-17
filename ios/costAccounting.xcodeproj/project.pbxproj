@@ -84,7 +84,7 @@
 		00E356EE1AD99517003FC87E /* costAccountingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = costAccountingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* costAccountingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = costAccountingTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* costAccounting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = costAccounting.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Cost Accounting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cost Accounting.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = costAccounting/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = costAccounting/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -102,6 +102,7 @@
 		285331FD249029020081F82E /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-BoldItalic.ttf"; path = "../../../../Downloads/open-sans/OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		285331FE249029020081F82E /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "../../../../Downloads/open-sans/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		285331FF249029030081F82E /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "../../../../Downloads/open-sans/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		28CBCCA32492119400FDD06D /* costAccounting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = costAccounting.entitlements; path = costAccounting/costAccounting.entitlements; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* costAccounting-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "costAccounting-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* costAccounting-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "costAccounting-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A4C0955B4C0378B123D0D93 /* libPods-costAccounting.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-costAccounting.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,6 +176,7 @@
 		13B07FAE1A68108700A75B9A /* costAccounting */ = {
 			isa = PBXGroup;
 			children = (
+				28CBCCA32492119400FDD06D /* costAccounting.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -242,7 +244,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* costAccounting.app */,
+				13B07F961A680F5B00A75B9A /* Cost Accounting.app */,
 				00E356EE1AD99517003FC87E /* costAccountingTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* costAccounting-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* costAccounting-tvOSTests.xctest */,
@@ -306,7 +308,7 @@
 			);
 			name = costAccounting;
 			productName = costAccounting;
-			productReference = 13B07F961A680F5B00A75B9A /* costAccounting.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Cost Accounting.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* costAccounting-tvOS */ = {
@@ -363,6 +365,7 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = V9Y3BMACPC;
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -835,6 +838,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = costAccounting/costAccounting.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V9Y3BMACPC;
 				ENABLE_BITCODE = NO;
@@ -849,8 +855,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = costAccounting;
+				PRODUCT_BUNDLE_IDENTIFIER = com.posadskiy.costAccountingApp;
+				PRODUCT_NAME = "Cost Accounting";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -863,6 +870,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = costAccounting/costAccounting.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V9Y3BMACPC;
 				ENABLE_BITCODE = YES;
@@ -873,8 +883,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = costAccounting;
+				PRODUCT_BUNDLE_IDENTIFIER = com.posadskiy.costAccountingApp;
+				PRODUCT_NAME = "Cost Accounting";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
