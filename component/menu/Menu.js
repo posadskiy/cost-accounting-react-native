@@ -5,6 +5,7 @@ import AddPurchase from "../add_purchase/AddPurchase";
 import AddIncome from "../add_income/AddIncome";
 import Statistic from "../statistic/Statistic";
 import Chart from "../chart/Chart";
+import User from "../user/User";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,6 +59,16 @@ const Menu = () => {
 					tabBarLabel: 'Chart',
 					tabBarIcon: ({ color, size }) => (
 						<Icon name="pie-chart" size={size} color={color} />
+					),
+				}}
+			/>
+			<Tab.Screen
+				name="Me"
+				component={User}
+				options={{
+					tabBarLabel: 'Me',
+					tabBarIcon: ({ color, size }) => (
+						<Icon name="user" size={size} color={color} />
 					),
 				}}
 			/>
