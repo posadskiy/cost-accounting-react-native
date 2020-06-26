@@ -32,6 +32,12 @@ const styles = StyleSheet.create({
 		fontWeight: "400",
 		textAlign: "left",
 	},
+	smallText: {
+		color: Colors.lighter,
+		fontSize: SmallPhone() ? 8 : 13,
+		fontWeight: "400",
+		textAlign: "left",
+	},
   generalTextRight: {
 		color: Colors.lighter,
 		fontSize: SmallPhone() ? 11 : 16,

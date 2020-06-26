@@ -15,6 +15,9 @@ const URL = {
     delete: 'income/delete',
     categories: 'income/categories'
   },
+  USER: {
+    allInProject: 'user/allInProject'
+  },
   CURRENCIES: {
     all: 'currency/all',
   },
