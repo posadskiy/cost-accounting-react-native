@@ -70,7 +70,7 @@ const Statistic = () => {
 				},
 			})
 			.then(result => setMonthPurchasesTotal(result.data))
-			.catch(error => console.error(error));
+			.catch(() => setMonthPurchasesTotal(defaultCategory));
 	}
 	
 	const receiveMonthIncomesTotal = () => {
@@ -87,7 +87,7 @@ const Statistic = () => {
 				},
 			})
 			.then(result => setMonthIncomesTotal(result.data))
-			.catch(error => console.error(error));
+			.catch(() => setMonthIncomesTotal(defaultCategory));
 	}
 	
 	const receiveMonthPurchasesTotalForUser = () => {
@@ -104,7 +104,7 @@ const Statistic = () => {
 				},
 			})
 			.then(result => setMonthPurchasesTotalForUser(result.data))
-			.catch(error => console.error(error));
+			.catch(() => setMonthIncomesTotalForUser(defaultCategory));
 	}
 	
 	const receiveMonthIncomesTotalForUser = () => {
@@ -121,7 +121,7 @@ const Statistic = () => {
 				},
 			})
 			.then(result => setMonthIncomesTotalForUser(result.data))
-			.catch(error => console.error(error));
+			.catch(() => setMonthIncomesTotalForUser(defaultCategory));
 	}
 	
 	const mapEvents = (events) => Object.keys(events).map((key, index) => {
