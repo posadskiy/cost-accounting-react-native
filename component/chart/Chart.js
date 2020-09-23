@@ -3,6 +3,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import {
   View,
   Text,
+  Alert,
 } from 'react-native';
 import styles from "../../Styles";
 import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
@@ -32,7 +33,7 @@ const Chart = () => {
         },
       })
       .then(result => mapStatistics(result.data))
-      .catch(error => console.error(error));
+      .catch(error => Alert.alert(error.response.data.title, error.response.data.message));
   };
   
   const mapStatistics = (data) => {
@@ -80,7 +81,6 @@ const Chart = () => {
   const verticalContentInset = { top: 10, bottom: 10 }
   const xAxisHeight = 30
 
-  console.log(categories);
   return (
     <>
     <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
