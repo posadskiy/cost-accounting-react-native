@@ -27,6 +27,8 @@ function wait(timeout) {
 }
 
 const AddPurchase = () => {
+  const DEFAULT_CURRENCY = "BYN";
+
 	const [category, setCategory] = useState("");
 	const [name, setName] = useState("");
 	const [amount, setAmount] = useState("");
@@ -35,7 +37,7 @@ const AddPurchase = () => {
 	const [isSplit, setIsSplit] = useState(false);
 	const [categories, setCategories] = useState([]);
 	const [currencies, setCurrencies] = useState([]);
-	const [currency, setCurrency] = useState("BYN");
+	const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
 	const [projectUsers, setProjectUsers] = useState([]);
 	const [refreshing, setRefreshing] = useState(false);
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -45,7 +47,7 @@ const AddPurchase = () => {
 		setCategory("");
 		setName("");
 		setAmount("");
-		setCurrency("BYN");
+		setCurrency(DEFAULT_CURRENCY);
 		setDate(new Date());
 		setIsPrivate(false);
 		setIsSplit(false);
