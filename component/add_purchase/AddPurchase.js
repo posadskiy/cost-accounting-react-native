@@ -97,7 +97,7 @@ const AddPurchase = () => {
     const pickedUser = tempProjectUsers.find((projectUser) => userId === projectUser.id);
     pickedUser.isPicked = !pickedUser.isPicked;
     const pickedUsers = tempProjectUsers.filter(user => user.isPicked);
-    pickedUsers.forEach(user => user.amount = '' + amount / pickedUsers.length);
+    pickedUsers.forEach(user => user.amount = (amount / pickedUsers.length).toFixed(2));
     const unpickedUsers = tempProjectUsers.filter(user => !user.isPicked);
     unpickedUsers.forEach(user => user.amount = '0');
     setProjectUsers(tempProjectUsers);
@@ -111,7 +111,7 @@ const AddPurchase = () => {
     const pickedUsers = tempProjectUsers.filter(user => user.isPicked);
     if (pickedUsers.length === 2) {
       const anotherUser = pickedUsers.find(projectUser => pickedUser.id !== projectUser.id);
-      anotherUser.amount = amount - value + '';
+      anotherUser.amount = (amount - value).toFixed(2);
     }
     
     setProjectUsers(tempProjectUsers);
