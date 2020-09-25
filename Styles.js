@@ -32,6 +32,13 @@ const styles = StyleSheet.create({
 		fontWeight: "400",
 		textAlign: "left",
 	},
+	buttonTextCenter: {
+		color: Colors.lighter,
+		fontSize: SmallPhone() ? 11 : 16,
+		fontWeight: "700",
+		textAlign: "center",
+    alignItems: "center",
+	},
 	smallText: {
 		color: Colors.lighter,
 		fontSize: SmallPhone() ? 8 : 13,
@@ -108,9 +115,19 @@ const styles = StyleSheet.create({
 	},
 	sectionContainer: {
 		color: Colors.lighter,
-		marginTop: SmallPhone() ? 16 : 32,
-		paddingHorizontal: 10,
 	},
+  sectionContainerRow: {
+    color: Colors.lighter,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10,
+    height: SmallPhone() ? 25 : 40,
+  },
+  touchableSaveButton: {
+	  backgroundColor: "#3333dd"
+  }
 });
 
 export default styles;

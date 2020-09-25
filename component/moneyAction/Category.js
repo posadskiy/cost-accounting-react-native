@@ -15,7 +15,7 @@ const Category = ({categories, category, setCategory}) => {
 
 	return (
 		<View style={styles.sectionContainer}>
-			<Text style={styles.headersText}>Category is {!!category ? category.name : "not selected"}</Text>
+			<Text style={styles.headersText}>{!!category ? category.name : "Not selected"}</Text>
 			<View style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
 				{
 					categories.map((category) => (

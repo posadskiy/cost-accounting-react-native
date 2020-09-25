@@ -1,11 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import AddPurchase from "../add_purchase/AddPurchase";
-import AddIncome from "../add_income/AddIncome";
 import Statistic from "../statistic/Statistic";
 import Chart from "../chart/Chart";
 import User from "../user/User";
+import AddPurchase from "../moneyAction/AddPurchase";
+import AddIncome from "../moneyAction/AddIncome";
 
 const Tab = createBottomTabNavigator();
 

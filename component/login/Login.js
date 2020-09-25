@@ -1,5 +1,6 @@
 import React, {useState, useReducer, useEffect, createContext, useCallback} from 'react';
-import {Text, TextInput, View, Button, AsyncStorage} from 'react-native';
+import {Text, TextInput, View, Button} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../../Styles';
 import axios from 'axios';
 import hmacSha256 from 'crypto-js/hmac-sha256';
