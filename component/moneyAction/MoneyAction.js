@@ -146,10 +146,10 @@ const MoneyAction = ({mode}) => {
     if (isSplit) {
       const pickedUsers = projectUsers
         .filter(user => user.isPicked)
-        .map(user => ({id: user.id, success: false, error: undefined}));
+        .map(user => ({id: user.id, amount: user.amount, success: false, error: undefined}));
 
       for (let i = 0; i < pickedUsers.length; ++i) {
-        const body = getBody(pickedUsers[i].id);
+        const body = getBody(pickedUsers[i].id, pickedUsers[i].amount);
 
         const response = isPurchaseMode() ? await savePurchase(body) : await saveIncome(body);
 
@@ -228,7 +228,7 @@ const MoneyAction = ({mode}) => {
 
   const getEntityName = () => isIncomeMode() ? "income" : "purchase";
   
-	const getBody = (id) => {
+	const getBody = (id, amount) => {
     return JSON.stringify({
       userId: id,
       [getEntityName()]: {
