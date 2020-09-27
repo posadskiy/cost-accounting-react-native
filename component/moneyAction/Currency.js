@@ -12,7 +12,7 @@ const Currency = ({currency, setCurrency, currencies}) => {
 	const [isShow, setIsShow] = useState(false);
 
 	return (
-		<TouchableHighlight onPress={() => setIsShow(true)} style={styles.sectionContainerRow}>
+		<TouchableHighlight onPress={() => setIsShow(true)} underlayColor="#333333" style={styles.sectionContainerRow}>
 			<View style={{display: "flex", flexDirection: "row"}}>
 				<Text style={[{alignSelf: "center"}, styles.headersText]}>{currency}</Text>
 			{isShow && (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Statistic from "../statistic/Statistic";
 import Chart from "../chart/Chart";
 import User from "../user/User";
@@ -9,7 +9,10 @@ import AddIncome from "../moneyAction/AddIncome";
 
 const Tab = createBottomTabNavigator();
 
-Icon.loadFont();
+FontAwesome5.getStyledIconSet('brand').loadFont();
+FontAwesome5.getStyledIconSet('light').loadFont();
+FontAwesome5.getStyledIconSet('regular').loadFont();
+FontAwesome5.getStyledIconSet('solid').loadFont();
 const Menu = () => {
 	return (
 		<Tab.Navigator
@@ -26,7 +29,7 @@ const Menu = () => {
 				options={{
 					tabBarLabel: 'Purchase',
 					tabBarIcon: ({ color, size }) => (
-						<Icon name="cart-plus" size={size} color={color} />
+						<FontAwesome5 name="cart-plus" size={size} color={color} />
 					),
 				}}
 			/>
@@ -37,7 +40,7 @@ const Menu = () => {
 				options={{
 					tabBarLabel: 'Income',
 					tabBarIcon: ({ color, size }) => (
-						<Icon name="money" size={size} color={color} />
+						<FontAwesome5 name="money-bill-wave" size={size} color={color} />
 					),
 				}}
 			/>
@@ -48,7 +51,7 @@ const Menu = () => {
 				options={{
 					tabBarLabel: 'Statistic',
 					tabBarIcon: ({ color, size }) => (
-						<Icon name="align-justify" size={size} color={color} />
+						<FontAwesome5 name="align-justify" size={size} color={color} />
 					),
 				}}
 			/>
@@ -58,7 +61,7 @@ const Menu = () => {
 				options={{
 					tabBarLabel: 'Chart',
 					tabBarIcon: ({ color, size }) => (
-						<Icon name="pie-chart" size={size} color={color} />
+						<FontAwesome5 name="chart-pie" size={size} color={color} />
 					),
 				}}
 			/>
@@ -68,7 +71,7 @@ const Menu = () => {
 				options={{
 					tabBarLabel: 'Me',
 					tabBarIcon: ({ color, size }) => (
-						<Icon name="user" size={size} color={color} />
+						<FontAwesome5 name="user" size={size} color={color} />
 					),
 				}}
 			/>

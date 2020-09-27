@@ -5,7 +5,9 @@ import {
 	View,
 } from "react-native";
 
-import styles from "../../Styles";
+import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5';
+
+import styles, {SmallPhone} from "../../Styles";
 
 const Category = ({categories, category, setCategory}) => {
 	
@@ -22,9 +24,10 @@ const Category = ({categories, category, setCategory}) => {
 						<TouchableHighlight
 							key={category.id}
 							onPress={() => setCategory(category)}
+              underlayColor="#333333"
 						>
-							<View style={[isCurrentCategory(category.id) ? styles.grayIcon : styles.blackIcon, styles.categoryItem]}>
-								<Text style={styles.categoryItemText}>{category.emoji}</Text>
+							<View style={styles.categoryItem}>
+                <FontAwesome5 style={{alignSelf: "center"}} name={category.emoji} size={SmallPhone() ? 28 : 35} color={isCurrentCategory(category.id) ? "yellow" : "white"} />
 							</View>
 						</TouchableHighlight>
 					))

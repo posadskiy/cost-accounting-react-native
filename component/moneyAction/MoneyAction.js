@@ -41,6 +41,11 @@ const MoneyAction = ({mode}) => {
   const DEFAULT_CURRENCY = "BYN";
   const PURCHASE_MODE = "PURCHASE";
   const INCOME_MODE = "INCOME";
+  
+  const INIT_STATUS = "INIT_STATUS";
+  const SAVING_STATUS = "SAVING_STATUS";
+  const SAVED_STATUS = "SAVED_STATUS";
+  const ERROR_STATUS = "ERROR_STATUS";
 
 	const [category, setCategory] = useState("");
 	const [name, setName] = useState("");
@@ -54,6 +59,7 @@ const MoneyAction = ({mode}) => {
 	const [projectUsers, setProjectUsers] = useState([]);
 	const [refreshing, setRefreshing] = useState(false);
 	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [status, setStatus] = useState(INIT_STATUS);
   const user = useContext(UserContext);
   
   const isPurchaseMode = () => mode === PURCHASE_MODE;
@@ -78,6 +84,16 @@ const MoneyAction = ({mode}) => {
 	  
 	  setAmountToCurrentUser();
 	  onOpenModal();
+  }
+  
+  const setSavingStatus = () => setStatus(SAVING_STATUS);
+  const setSavedStatus = () => {
+    setStatus(SAVED_STATUS);
+    setTimeout(() => setStatus(INIT_STATUS), 2000);
+  }
+  const setErrorStatus = () => {
+    setStatus(ERROR_STATUS);
+    setTimeout(() => setStatus(INIT_STATUS), 2000);
   }
   
   const setAmountToCurrentUser = () => {
@@ -130,8 +146,8 @@ const MoneyAction = ({mode}) => {
     setProjectUsers(clearedProjectUsers);
   }
 
-	const sendPurchase = async () => {
-		const isValidated = validate(getPurchase());
+	const sendMoneyAction = async () => {
+		const isValidated = validate(getMoneyAction());
 		if (!isValidated) {
 			Alert.alert(
 				"That's problem...",
@@ -148,6 +164,7 @@ const MoneyAction = ({mode}) => {
         .filter(user => user.isPicked)
         .map(user => ({id: user.id, amount: user.amount, success: false, error: undefined}));
 
+      setSavingStatus()
       for (let i = 0; i < pickedUsers.length; ++i) {
         const body = getBody(pickedUsers[i].id, pickedUsers[i].amount);
 
@@ -168,30 +185,36 @@ const MoneyAction = ({mode}) => {
       const failedUsers = pickedUsers.filter(user => !user.success);
       
       if (failedUsers.length === 0) {
-        alertSuccess();
+        setSavedStatus()
         clearData();
         return;
       }
 
       if (failedUsers.length === 1) {
         const user = failedUsers[0];
+        setErrorStatus()
         alertError(user.error, getUserById(user.id));
         return;
       }
 
+      setErrorStatus()
       const errorMessage = failedUsers.map(user => getUserById(user.id) + ': ' + user.error.message).join('\n');
       alertError({title: "Problem happened", message: errorMessage});
     }
 		
-		const body = getBody(user.id);
+		const body = getBody(user.id, amount);
 
+    setSavingStatus()
     const response = isPurchaseMode() ? await savePurchase(body) : await saveIncome(body);
     if (response.status === Status.REST_SUCCESS_CODE) {
-      alertSuccess();
+      setSavedStatus()
       clearData();
       return;
     }
-    if (response.status === Status.REST_SERVER_ERROR_CODE) alertError();
+    if (response.status === Status.REST_SERVER_ERROR_CODE) {
+      setErrorStatus()
+      alertError();
+    }
 	}
 	
 	const receivePurchaseCategories = async () => {
@@ -261,7 +284,7 @@ const MoneyAction = ({mode}) => {
     Alert.alert(title, message, [{text: "OK"}]);
   }
 
-  const getPurchase = () => {
+  const getMoneyAction = () => {
     return {
       category,
       name,
@@ -385,7 +408,9 @@ const MoneyAction = ({mode}) => {
       </GrayBlock>
       <BetweenGrayBlocks />
       <Buttons
-        onClick={sendPurchase}
+        onClick={sendMoneyAction}
+        isEnabled={validate(getMoneyAction())}
+        status={status}
       />
 		</ScrollView>
 	)

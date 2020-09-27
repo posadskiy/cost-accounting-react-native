@@ -10,7 +10,7 @@ const Name = ({name, setName}) => {
 	return (
 		<View style={styles.sectionContainerRow}>
 			<TextInput
-				style={[styles.headersText]}
+				style={[styles.headersText, {height: "100%", width: "100%"}]}
 				value={name}
 				onChangeText={setName}
 				placeholder="What is it?"

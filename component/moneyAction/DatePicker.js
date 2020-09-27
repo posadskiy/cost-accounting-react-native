@@ -20,7 +20,7 @@ const DatePicker = ({date, setDate}) => {
   }
 
 	return (
-		<TouchableHighlight onPress={onDateClick} style={styles.sectionContainerRow}>
+		<TouchableHighlight onPress={onDateClick} underlayColor="#333333" style={styles.sectionContainerRow}>
 			<View style={{display: "flex", flexDirection: "row"}}>
 				<Text style={[{alignSelf: "center"}, styles.headersText]}>{date.toLocaleDateString()}</Text>
 			{isShow && (

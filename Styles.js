@@ -4,7 +4,7 @@ import {Colors} from "react-native/Libraries/NewAppScreen";
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
- export const SmallPhone = () => {
+export const SmallPhone = () => {
 	return width <= 375;
 }
 
@@ -100,13 +100,15 @@ const styles = StyleSheet.create({
 		display: "flex",
 		justifyContent: "center",
 		textAlign: "center",
+    alignSelf: "center",
+    alignContent: "center",
 		flex: 1,
 		minWidth: SmallPhone() ? 40 : 50,
 		maxWidth: SmallPhone() ? 40 : 50,
 		marginLeft: SmallPhone() ? 5 : 10,
 		marginRight: SmallPhone() ? 5 : 10,
-		marginTop: SmallPhone() ? 3 : 5,
-		marginBottom: SmallPhone() ? 3 : 5,
+		marginTop: SmallPhone() ? 5 : 10,
+		marginBottom: SmallPhone() ? 5 : 10,
 	},
 	categoryItemText: {
 	  color: "white",
@@ -115,6 +117,8 @@ const styles = StyleSheet.create({
 	},
 	sectionContainer: {
 		color: Colors.lighter,
+    marginTop: 10,
+    marginBottom: 10,
 	},
   sectionContainerRow: {
     color: Colors.lighter,

@@ -10,7 +10,7 @@ const Amount = ({amount, setAmount}) => {
 	return (
 		<View style={styles.sectionContainerRow}>
 			<TextInput
-				style={styles.headersText}
+				style={[styles.headersText, {height: "100%", width: "100%"}]}
 				value={amount}
 				onChangeText={setAmount}
 				placeholder="How much?"
