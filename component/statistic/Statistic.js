@@ -133,7 +133,7 @@ const Statistic = () => {
     .reverse();
 
   const createDateFromKey = (key) => {
-    return createTwoDigitsDateItem(+key) + "." + createTwoDigitsDateItem(new Date().getMonth()) + "." + createTwoDigitsDateItem(new Date().getFullYear());
+    return createTwoDigitsDateItem(+key) + "." + createTwoDigitsDateItem(new Date().getMonth() + 1) + "." + createTwoDigitsDateItem(new Date().getFullYear());
   }
   
   const createTwoDigitsDateItem = (value) => {
