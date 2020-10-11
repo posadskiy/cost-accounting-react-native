@@ -4,6 +4,7 @@ import {
 	Text,
 	View,
   TouchableHighlight,
+  Platform,
 } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import BlackModal from "../common/Modal";
@@ -34,9 +35,11 @@ const DatePicker = ({date, setDate}) => {
             value={date}
             mode="date"
             is24Hour={true}
-            display="default"
+            display="inline"
             onChange={onChange}
-            textColor="white"
+            {...(Platform.OS === 'ios' && parseFloat(Platform.Version) >= 14
+              ? null
+              : { textColor: "white" })} // on ios 14+ causes crash
           />
 				</BlackModal>
 			)}
