@@ -3,7 +3,7 @@ import Modal from 'react-native-modal';
 import styles from "../../Styles";
 import {Button, View} from "react-native";
 
-const BlackModal = ({children, isModalVisible, setIsModalVisible, onCloseModal}) => {
+const BlackModal = ({children, isModalVisible, onCloseModal, onApplyModal}) => {
 
   return (
     <Modal
@@ -26,7 +26,7 @@ const BlackModal = ({children, isModalVisible, setIsModalVisible, onCloseModal})
             style={{flex: 1}}
           />
           <Button
-            onPress={() => setIsModalVisible(false)}
+            onPress={onApplyModal}
             title="Apply"
             style={{flex: 1}}
           />
