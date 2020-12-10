@@ -66,6 +66,7 @@ const Menu = () => {
 				}}
 			/>
 			<Tab.Screen
+        style={{backgroundColor: "black", color: "white"}}
 				name="Me"
 				component={User}
 				options={{
