@@ -4,6 +4,7 @@ import {
   TouchableHighlight,
 } from "react-native";
 import styles from "../../Styles";
+import Button from "../common/Button";
 
 const Buttons = ({onClick, isEnabled, status}) => {
   const save = "Save";
@@ -25,9 +26,11 @@ const Buttons = ({onClick, isEnabled, status}) => {
   }
   
 	return (
-    <TouchableHighlight onPress={onClick} style={{backgroundColor: isEnabled ? "#34C758" : "gray", borderRadius: 20, marginLeft: 14, marginRight: 14, padding: 14}}>
-      <Text style={styles.buttonTextCenter}>{getText()}</Text>
-    </TouchableHighlight>
+	  <Button
+      text={getText()}
+      onPress={onClick}
+      isEnabled={isEnabled}
+    />
 	)
 };
 

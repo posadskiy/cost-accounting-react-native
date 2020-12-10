@@ -13,7 +13,7 @@ const Amount = ({amount, setAmount}) => {
 				style={[styles.headersText, {height: "100%", width: "100%"}]}
 				value={amount}
 				onChangeText={setAmount}
-				placeholder="How much?"
+				placeholder="Amount"
 				placeholderTextColor="gray"
 				keyboardType="decimal-pad"
 				returnKeyType="done"

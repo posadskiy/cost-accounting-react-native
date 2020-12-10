@@ -19,6 +19,14 @@ const DatePicker = ({date, setDate}) => {
 	const onDateClick = () => {
     setIsShow(prevState => !prevState);
   }
+  
+  const onCloseModal = () => {
+    setIsShow(false);
+  }
+  
+  const onApplyModal = () => {
+    setIsShow(false);
+  }
 
 	return (
 		<TouchableHighlight onPress={onDateClick} underlayColor="#333333" style={styles.sectionContainerRow}>
@@ -27,8 +35,8 @@ const DatePicker = ({date, setDate}) => {
 			{isShow && (
 			  <BlackModal
           isModalVisible={isShow}
-          setIsModalVisible={setIsShow}
-          onCloseModal={() => setIsShow(false)}
+          onCloseModal={onCloseModal}
+          onApplyModal={onApplyModal}
         >
           <DateTimePicker
             testID="dateTimePicker"

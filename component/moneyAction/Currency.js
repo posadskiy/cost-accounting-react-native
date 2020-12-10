@@ -11,6 +11,14 @@ import BlackModal from "../common/Modal";
 const Currency = ({currency, setCurrency, currencies}) => {
 	const [isShow, setIsShow] = useState(false);
 
+  const onCloseModal = () => {
+    setIsShow(false);
+  }
+
+  const onApplyModal = () => {
+    setIsShow(false);
+  }
+
 	return (
 		<TouchableHighlight onPress={() => setIsShow(true)} underlayColor="#333333" style={styles.sectionContainerRow}>
 			<View style={{display: "flex", flexDirection: "row"}}>
@@ -18,8 +26,9 @@ const Currency = ({currency, setCurrency, currencies}) => {
 			{isShow && (
 			  <BlackModal 
           isModalVisible={isShow}
-          setIsModalVisible={setIsShow}
-          onCloseModal={() => setIsShow(false)}>
+          onCloseModal={onCloseModal}
+          onApplyModal={onApplyModal}
+        >
           <Picker
             selectedValue={currency}
             style={[styles.headersText, {color: "white"}]}

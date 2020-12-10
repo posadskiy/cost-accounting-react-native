@@ -38,7 +38,7 @@ import GrayBlock from "../common/GrayBlock";
 import ProjectUser from "./ProjectUser";
 
 const MoneyAction = ({mode}) => {
-  const DEFAULT_CURRENCY = "BYN";
+  const DEFAULT_CURRENCY = "RUB";
   const PURCHASE_MODE = "PURCHASE";
   const INCOME_MODE = "INCOME";
   
@@ -73,6 +73,7 @@ const MoneyAction = ({mode}) => {
 		setDate(new Date());
 		setIsPrivate(false);
 		setIsSplit(false);
+    clearProjectUsers();
 		setIsModalVisible(false);
 	}
 
@@ -132,6 +133,10 @@ const MoneyAction = ({mode}) => {
   const onCloseModal = () => {
     clearProjectUsers();
     setIsSplit(false);
+    setIsModalVisible(false);
+  }
+  
+  const onApplyModal = () => {
     setIsModalVisible(false);
   }
   
@@ -207,7 +212,7 @@ const MoneyAction = ({mode}) => {
     setSavingStatus()
     const response = isPurchaseMode() ? await savePurchase(body) : await saveIncome(body);
     if (response.status === Status.REST_SUCCESS_CODE) {
-      setSavedStatus()
+      setSavedStatus();
       clearData();
       return;
     }
@@ -264,16 +269,6 @@ const MoneyAction = ({mode}) => {
       },
     });
   }
-	
-	const alertSuccess = () => {
-    Alert.alert(
-      "Saved!",
-      "Thanks, your " + getEntityName() + " successfully saved",
-      [{
-        text: "OK"
-      }]
-    );
-  }
   
   const alertError = (error, userName) => {
 	  const title = error.title || "Oh, no...";
@@ -294,6 +289,8 @@ const MoneyAction = ({mode}) => {
       currency,
     }
   }
+  
+  const onSetAmount = (value) => setAmount(value.replace(",", "."));
 
 	const onRefresh = React.useCallback(() => {
 		setRefreshing(true);
@@ -351,12 +348,13 @@ const MoneyAction = ({mode}) => {
 		>
       <BlackModal
         isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
+        onApplyModal={onApplyModal}
         onCloseModal={onCloseModal}
       >
           {
             projectUsers.map(projectUser => (
               <ProjectUser
+                key={projectUser.id}
                 onSwitchPress={() => pickUser(projectUser.id)}
                 onTextChange={(value) => onChangeSplitAmount(projectUser.id, value)}
                 projectUser={projectUser}
@@ -380,7 +378,7 @@ const MoneyAction = ({mode}) => {
         <Line />
         <Amount
           amount={amount}
-          setAmount={setAmount}
+          setAmount={onSetAmount}
         />
       </GrayBlock>
       <BetweenGrayBlocks />

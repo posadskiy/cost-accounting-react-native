@@ -13,7 +13,7 @@ const Name = ({name, setName}) => {
 				style={[styles.headersText, {height: "100%", width: "100%"}]}
 				value={name}
 				onChangeText={setName}
-				placeholder="What is it?"
+				placeholder="Name"
 				placeholderTextColor="gray"
 				returnKeyType="done"
 			/>
