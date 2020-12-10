@@ -1,9 +1,11 @@
 const LOCAL = 0;
 const PRODUCTION = 1;
-const mode = LOCAL;
+const EBS = 2;
+const mode = EBS;
 
 const LOCAL_SERVER = "http://localhost:8080/";
 const PRODUCTION_SERVER = "https://cost-accounting.posadskiy.com/";
+const EBS_SERVER = "http://cost-accounting-prod.eu-central-1.elasticbeanstalk.com/";
 const URL = {
   PURCHASE: {
     add: 'purchase/add',
@@ -16,7 +18,8 @@ const URL = {
     categories: 'income/categories'
   },
   USER: {
-    allInProject: 'user/allInProject'
+    allInProject: 'user/allInProject',
+    updateUser: 'user',
   },
   CURRENCIES: {
     all: 'currency/all',
@@ -47,6 +50,10 @@ const url = (url) => {
 			server = PRODUCTION_SERVER;
 			break;
 		}
+    case EBS: {
+      server = EBS_SERVER;
+      break;
+    }
 		default: {
 			server = LOCAL_SERVER;
 			break;
