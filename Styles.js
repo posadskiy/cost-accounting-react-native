@@ -117,6 +117,11 @@ const styles = StyleSheet.create({
 	},
 	sectionContainer: {
 		color: Colors.lighter,
+    marginTop: 10,
+    marginBottom: 10,
+	},
+	statisticsContainer: {
+		color: Colors.lighter,
     margin: 10,
 	},
   sectionContainerRow: {

@@ -161,7 +161,7 @@ const Statistic = () => {
 				/>
 			}
 		>
-			<View style={styles.sectionContainer}>
+			<View style={styles.statisticsContainer}>
         <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
           <Text style={[styles.headersText, {color: "lightcoral"}]}>{purchasesTotal}</Text>
           <Text style={[styles.headersText, {color: "greenyellow"}]}>{incomesTotal}</Text>
