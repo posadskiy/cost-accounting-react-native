@@ -117,8 +117,7 @@ const styles = StyleSheet.create({
 	},
 	sectionContainer: {
 		color: Colors.lighter,
-    marginTop: 10,
-    marginBottom: 10,
+    margin: 10,
 	},
   sectionContainerRow: {
     color: Colors.lighter,

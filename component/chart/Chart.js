@@ -1,29 +1,74 @@
-import React, {useContext, useState, useEffect} from 'react';
-
+import React, {useEffect, useState, useContext} from 'react';
 import {
+  Alert,
   View,
   Text,
-  Alert,
-} from 'react-native';
+} from "react-native";
 import styles from "../../Styles";
-import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
+import {Picker} from "@react-native-community/picker";
+import BlackModal from "../common/Modal";
+import {loadProjectMonths} from "../../actions/statisticActions";
+import Button from "../common/Button";
+import {UserContext} from "../login/Login";
 import axios from "axios";
 import {URL, url} from "../../common/URL";
-import {UserContext} from "../login/Login";
+import StatisticRow from "./StatisticRow";
+import BetweenGrayBlocks from "../common/BetweenGrayBlocks";
 
 const Chart = () => {
+  const [isShow, setIsShow] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState("Not selected");
+  const [months, setMonths] = useState([]);
+  const [purchaseCategories, setPurchaseCategories] = useState([]);
+  const [incomeCategories, setIncomeCategories] = useState([]);
+  const [purchasesTotal, setPurchasesTotal] = useState(0);
+  const [incomesTotal, setIncomesTotal] = useState(0);
+  const [purchasesLimit, setPurchasesLimit] = useState(0);
   const user = useContext(UserContext);
-  const [statistics, setStatistics] = useState([]);
-  const [amounts, setAmounts] = useState([]);
-  const [limits, setLimits] = useState([]);
-  const [todayLimits, setTodayLimits] = useState([]);
-  const [categories, setCategories] = useState([]);
 
-  const receiveCurrentMonthStatistics = () => {
+  const onCloseModal = () => {
+    setIsShow(false);
+  }
+
+  const onApplyModal = () => {
+    setIsShow(false);
+
+    receiveCurrentMonthStatistics(selectedMonth);
+  }
+  
+  const onChangeSelectedMonth = (newSelectedMonth) => {
+    setSelectedMonth(newSelectedMonth);
+  }
+
+  useEffect(() => {
+    const receiveProjectMonths = async () => {
+      const body = JSON.stringify({
+        userId: user.id,
+      });
+
+      const months = await loadProjectMonths(body);
+
+      setMonths(months);
+      setSelectedMonth(months[0]);
+      receiveCurrentMonthStatistics(months[0]);
+    };
+
+    receiveProjectMonths();
+  }, [months.length]);
+
+  const receiveCurrentMonthStatistics = (month) => {
+    const monthNames = [
+      "January", "February", "March", "April", "May",
+      "June", "July", "August", "September", "October",
+      "November", "December"
+    ];
+    const monthName = month.split(" ")[0];
+    const yearName = month.split(" ")[1];
+    
     const body = JSON.stringify({
       userId: user.id,
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
+      year: yearName,
+      month: monthNames.indexOf(monthName) + 1,
     });
 
     axios.post(url(URL.STATISTICS.month), body,
@@ -36,86 +81,70 @@ const Chart = () => {
       .catch(error => Alert.alert(error.response.data.title, error.response.data.message));
   };
   
-  const mapStatistics = (data) => {
-    const amounts = [];
-    const todayLimits = [];
-    const limits = [];
-    const resultCategories = [];
-    const categories = data.purchaseCategories;
-    const date = new Date();
-    const daysInMonth = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
-    Object.keys(categories).map(key => {
-      const category = categories[key];
-      amounts.push(category.amount);
-      todayLimits.push(category.limit * (date.getDate() / daysInMonth));
-      limits.push(category.limit);
-      resultCategories.push(category.category.name);
-    })
+  const mapStatistics = (statistics) => {
+    const purchaseCategories = [];
+    const incomeCategories = [];
+    Object.keys(statistics.purchaseCategories).map(key => purchaseCategories.push(statistics.purchaseCategories[key]));
+    Object.keys(statistics.incomeCategories).map(key => incomeCategories.push(statistics.incomeCategories[key]));
+    setPurchaseCategories(purchaseCategories);
+    setIncomeCategories(incomeCategories);
     
-    setAmounts(amounts);
-    setTodayLimits(todayLimits);
-    setLimits(limits);
-    setCategories(resultCategories);
+    const purchasesTotal = purchaseCategories.reduce((total, value) => total + value.amount, 0).toFixed();
+    const incomesTotal = incomeCategories.reduce((total, value) => total + value.amount, 0).toFixed();
+    const purchasesLimit = purchaseCategories.reduce((total, value) => total + value.limit, 0).toFixed();
+    
+    setPurchasesTotal(purchasesTotal);
+    setPurchasesLimit(purchasesLimit);
+    
+    setIncomesTotal(incomesTotal);
   }
 
-  useEffect(() => receiveCurrentMonthStatistics(), [statistics.length]);
-
-  const data = [
-    {
-      data: amounts,
-      svg: { stroke: 'lightgreen' },
-    },
-    {
-      data: todayLimits,
-      svg: { stroke: 'yellow' },
-    },
-    {
-      data: limits,
-      svg: { stroke: 'red' },
-    }
-  ];
-  
-  const xData = data[0].data;
-
-  const axesSvg = { fontSize: 16, fill: 'black' };
-  const verticalContentInset = { top: 10, bottom: 10 }
-  const xAxisHeight = 30
-
   return (
-    <>
-    <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
-      <Text style={[styles.generalText, {color: 'lightgreen'}]}>Current spent</Text>
-      <Text style={[styles.generalText, {color: 'yellow'}]}>Limit on today</Text>
-      <Text style={[styles.generalText, {color: 'red'}]}>Month limit</Text>
-    </View>
-    <View style={{ height: 300, padding: 20, flexDirection: 'row' }}>
-      <YAxis
-        data={xData}
-        style={{ marginBottom: xAxisHeight }}
-        contentInset={verticalContentInset}
-        svg={{ fontSize: 14, fill: 'white' }}
+    <View style={{padding: 14}}>
+      <Button
+        text={selectedMonth}
+        onPress={() => setIsShow(true)}
       />
-      <View style={{ flex: 1, marginLeft: 10 }}>
-        <LineChart
-          style={{ height: 200 }}
-          data={data}
-          gridMin={0}
-          contentInset={{ top: 10, bottom: 10 }}
-          svg={{ stroke: 'rgb(134, 65, 244)' }}
+      <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
+        <BlackModal
+          isModalVisible={isShow}
+          onCloseModal={onCloseModal}
+          onApplyModal={onApplyModal}
         >
-          <Grid svg={{stroke: "white", opacity: 0.2}} />
-        </LineChart>
-        <XAxis
-          style={{ marginHorizontal: -10 }}
-          data={xData}
-          formatLabel={(value, index) => categories[index]}
-          contentInset={{ left: 10, right: 10 }}
-          svg={{ fontSize: 14, fill: 'white' }}
-        />
+          <Picker
+            selectedValue={selectedMonth}
+            style={[styles.headersText, {color: "white"}]}
+            itemStyle={[styles.headersText, {color: "white"}]}
+            onValueChange={onChangeSelectedMonth}
+          >
+            {
+              months.map(month => (
+                <Picker.Item key={month} label={month} value={month} />
+              ))
+            }
+          </Picker>
+        </BlackModal>
+      </View>
+      <View>
+        <BetweenGrayBlocks />
+        <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+          <Text style={styles.eventDate}>Purchases</Text>
+          <Text style={styles.eventDate}>{purchasesTotal} / {purchasesLimit} $</Text>
+        </View>
+        {
+          purchaseCategories.map(purchaseCategory => <StatisticRow category={purchaseCategory} />)
+        }
+        <BetweenGrayBlocks />
+        <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+          <Text style={styles.eventDate}>Incomes</Text>
+          <Text style={styles.eventDate}>{incomesTotal} $</Text>
+        </View>
+        {
+          incomeCategories.map(incomeCategory => <StatisticRow category={incomeCategory} />)
+        }
       </View>
     </View>
-  </>
   )
-}
+};
 
 export default Chart;

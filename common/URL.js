@@ -1,7 +1,7 @@
 const LOCAL = 0;
 const PRODUCTION = 1;
 const EBS = 2;
-const mode = EBS;
+const mode = LOCAL;
 
 const LOCAL_SERVER = "http://localhost:8080/";
 const PRODUCTION_SERVER = "https://cost-accounting.posadskiy.com/";
@@ -32,6 +32,7 @@ const URL = {
     monthIncomeTotal: 'statistics/monthIncomeTotal',
     monthPurchaseTotalForUser: 'statistics/monthPurchaseTotalForUser',
     monthIncomeTotalForUser: 'statistics/monthIncomeTotalForUser',
+    projectMonthsList: 'statistics/projectMonthsList',
   },
   LOGIN: {
     login: 'login/auth',
