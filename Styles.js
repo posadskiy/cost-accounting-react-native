@@ -77,6 +77,13 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans',
     fontWeight: 'bold'
 	},
+	eventNameYellow: {
+		color: "yellow",
+		fontSize: SmallPhone() ? 17 : 23,
+		textAlign: "left",
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold'
+	},
 	eventCategory: {
 		color: Colors.lighter,
 		fontSize: SmallPhone() ? 13 : 18,
