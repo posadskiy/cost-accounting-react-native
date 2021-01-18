@@ -1,11 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react'
 
-import {RefreshControl, ScrollView, SectionList, Text, View,} from 'react-native';
+import {Platform, RefreshControl, ScrollView, SectionList, Text, View,} from 'react-native';
 import styles from "../../Styles";
 import axios from "axios";
 import {URL, url} from "../../common/URL";
 import {UserContext} from "../login/Login";
 import Event from "./Event";
+import BlackModal from "../common/Modal";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 function wait(timeout) {
 	return new Promise(resolve => {
@@ -18,6 +21,9 @@ const defaultCategory = {
   limit: 0,
 }
 
+const defaultYear = new Date().getFullYear();
+const defaultMonth = new Date().getMonth() + 1;
+
 const Statistic = () => {
 	const [refreshing, setRefreshing] = useState(false);
 	const [events, setEvents] = useState([]);
@@ -25,6 +31,10 @@ const Statistic = () => {
 	const [monthIncomesTotal, setMonthIncomesTotal] = useState(defaultCategory);
   const [monthPurchasesTotalForUser, setMonthPurchasesTotalForUser] = useState(defaultCategory);
   const [monthIncomesTotalForUser, setMonthIncomesTotalForUser] = useState(defaultCategory);
+  const [isShow, setIsShow] = useState(false);
+  const [month, setMonth] = useState(defaultMonth);
+  const [year, setYear] = useState(defaultYear);
+  const [date, setDate] = useState(new Date());
   const user = useContext(UserContext);
 
 	const onRefresh = React.useCallback(() => {
@@ -38,13 +48,17 @@ const Statistic = () => {
 
 		wait(2000).then(() => setRefreshing(false));
 	}, [refreshing]);
+	
+	const getBody = () => {
+    return JSON.stringify({
+      userId: user.id,
+      year,
+      month,
+    });
+  }
 
 	const receiveEvents = () => {
-	  const body = JSON.stringify({
-	    userId: user.id,
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-    });
+	  const body = getBody();
 
 		axios.post(url(URL.STATISTICS.events), body,
 			{
@@ -57,11 +71,7 @@ const Statistic = () => {
 	}
 
 	const receiveMonthPurchasesTotal = () => {
-	  const body = JSON.stringify({
-	    userId: user.id,
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-    });
+	  const body = getBody();
 
 		axios.post(url(URL.STATISTICS.monthPurchaseTotal), body,
 			{
@@ -74,11 +84,7 @@ const Statistic = () => {
 	}
 	
 	const receiveMonthIncomesTotal = () => {
-	  const body = JSON.stringify({
-	    userId: user.id,
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-    });
+	  const body = getBody();
 
 		axios.post(url(URL.STATISTICS.monthIncomeTotal), body,
 			{
@@ -91,11 +97,7 @@ const Statistic = () => {
 	}
 	
 	const receiveMonthPurchasesTotalForUser = () => {
-	  const body = JSON.stringify({
-	    userId: user.id,
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-    });
+	  const body = getBody();
 
 		axios.post(url(URL.STATISTICS.monthPurchaseTotalForUser), body,
 			{
@@ -104,15 +106,11 @@ const Statistic = () => {
 				},
 			})
 			.then(result => setMonthPurchasesTotalForUser(result.data))
-			.catch(() => setMonthIncomesTotalForUser(defaultCategory));
+			.catch(() => setMonthPurchasesTotalForUser(defaultCategory));
 	}
 	
 	const receiveMonthIncomesTotalForUser = () => {
-	  const body = JSON.stringify({
-	    userId: user.id,
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-    });
+	  const body = getBody();
 
 		axios.post(url(URL.STATISTICS.monthIncomeTotalForUser), body,
 			{
@@ -133,11 +131,31 @@ const Statistic = () => {
     .reverse();
 
   const createDateFromKey = (key) => {
-    return createTwoDigitsDateItem(+key) + "." + createTwoDigitsDateItem(new Date().getMonth() + 1) + "." + createTwoDigitsDateItem(new Date().getFullYear());
+    return createTwoDigitsDateItem(+key) + "." + createTwoDigitsDateItem(date.getMonth() + 1) + "." + createTwoDigitsDateItem(date.getFullYear());
   }
   
   const createTwoDigitsDateItem = (value) => {
     return value < 10 ? '0' + value : value;
+  }
+
+  const onCloseModal = () => {
+    setIsShow(false);
+  }
+
+  const onApplyModal = () => {
+    setIsShow(false);
+
+    receiveEvents();
+    receiveMonthPurchasesTotal();
+    receiveMonthIncomesTotal();
+    receiveMonthPurchasesTotalForUser();
+    receiveMonthIncomesTotalForUser();
+  }
+  
+  const onChangeDate = (event, selectedDate) => {
+    setDate(selectedDate);
+    setYear(selectedDate.getFullYear());
+    setMonth(selectedDate.getMonth() + 1);
   }
 
 	useEffect(() => receiveEvents(), [events.length]);
@@ -161,6 +179,28 @@ const Statistic = () => {
 				/>
 			}
 		>
+      <Pressable onPress={() => setIsShow(true)}>
+        <Text style={[styles.headersText, {color: "khaki"}]}>{date.toLocaleDateString("en-US", {year: "numeric", month:"long"})}</Text>
+      </Pressable>
+      {isShow && (
+        <BlackModal
+          isModalVisible={isShow}
+          onCloseModal={onCloseModal}
+          onApplyModal={onApplyModal}
+        >
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={onChangeDate}
+            {...(Platform.OS === 'ios' && parseFloat(Platform.Version) >= 14
+              ? null
+              : { textColor: "white" })} // on ios 14+ causes crash
+          />
+        </BlackModal>
+      )}
 			<View style={styles.statisticsContainer}>
         <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
           <Text style={[styles.headersText, {color: "lightcoral"}]}>{purchasesTotal}</Text>
