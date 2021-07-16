@@ -5,7 +5,7 @@ import {
 	View,
   TouchableHighlight,
 } from "react-native";
-import {Picker} from "@react-native-community/picker";
+import {Picker} from "@react-native-picker/picker";
 import BlackModal from "../common/Modal";
 
 const Currency = ({currency, setCurrency, currencies}) => {
