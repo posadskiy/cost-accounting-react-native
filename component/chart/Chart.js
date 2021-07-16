@@ -132,7 +132,15 @@ const Chart = () => {
           <Text style={styles.eventDate}>{purchasesTotal} / {purchasesLimit} $</Text>
         </View>
         {
-          purchaseCategories.map(purchaseCategory => <StatisticRow category={purchaseCategory} />)
+          purchaseCategories.map(purchaseCategory => {
+            const {
+              category: {
+                id,
+              } = {}
+            } = purchaseCategory;
+
+            return <StatisticRow key={id} category={purchaseCategory} />
+          })
         }
         <BetweenGrayBlocks />
         <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
@@ -140,7 +148,14 @@ const Chart = () => {
           <Text style={styles.eventDate}>{incomesTotal} $</Text>
         </View>
         {
-          incomeCategories.map(incomeCategory => <StatisticRow category={incomeCategory} />)
+          incomeCategories.map(incomeCategory => {
+            const {
+              category: {
+                id,
+              } = {}
+            } = incomeCategory;
+            return <StatisticRow key={id} category={incomeCategory} />
+          })
         }
       </View>
     </View>
