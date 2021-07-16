@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 
-import {Platform, RefreshControl, ScrollView, SectionList, Text, View,} from 'react-native';
+import {Platform, RefreshControl, SectionList, Text, View} from 'react-native';
 import styles from "../../Styles";
 import axios from "axios";
 import {URL, url} from "../../common/URL";
@@ -167,58 +167,58 @@ const Statistic = () => {
   const purchasesTotal = `${monthPurchasesTotalForUser.amount.toFixed(0)}$ / ${monthPurchasesTotal.amount.toFixed(0)}$ / ${monthPurchasesTotal.limit.toFixed(0)}$`;
   const incomesTotal = `${monthIncomesTotalForUser.amount.toFixed(0)}$ / ${monthIncomesTotal.amount.toFixed(0)}$`;
 	return (
-		<ScrollView
-			contentInsetAdjustmentBehavior="automatic"
-			style={styles.scrollView}
-			refreshControl={
-				<RefreshControl
-					refreshing={refreshing}
-					onRefresh={onRefresh}
-					titleColor="white"
-					title="Refreshing categories and currencies..."
-				/>
-			}
-		>
-      <Pressable onPress={() => setIsShow(true)}>
-        <Text style={[styles.headersText, {color: "khaki"}]}>{date.toLocaleDateString("en-US", {year: "numeric", month:"long"})}</Text>
-      </Pressable>
-      {isShow && (
-        <BlackModal
-          isModalVisible={isShow}
-          onCloseModal={onCloseModal}
-          onApplyModal={onApplyModal}
-        >
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode="date"
-            is24Hour={true}
-            display="default"
-            onChange={onChangeDate}
-            {...(Platform.OS === 'ios' && parseFloat(Platform.Version) >= 14
-              ? null
-              : { textColor: "white" })} // on ios 14+ causes crash
-          />
-        </BlackModal>
-      )}
-			<View style={styles.statisticsContainer}>
-        <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-          <Text style={[styles.headersText, {color: "lightcoral"}]}>{purchasesTotal}</Text>
-          <Text style={[styles.headersText, {color: "greenyellow"}]}>{incomesTotal}</Text>
-        </View>
-        <SectionList
-          sections={events}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => <Event event={item} />}
-          renderSectionHeader={({ section: { title } }) => (
-            <View style={{paddingTop: 10, paddingBottom: 4}}>
-              <Text style={styles.eventDate}>{title}</Text>
-            </View>
-          )}
+    <SectionList
+      contentInsetAdjustmentBehavior="automatic"
+      style={styles.scrollView}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          titleColor="white"
+          title="Refreshing categories and currencies..."
         />
-			</View>
-			
-		</ScrollView>
+      }
+      ListHeaderComponent={
+        <>
+          <Pressable onPress={() => setIsShow(true)}>
+            <Text style={[styles.headersText, {color: "khaki"}]}>{date.toLocaleDateString("en-US", {year: "numeric", month:"long"})}</Text>
+          </Pressable>
+          {isShow && (
+            <BlackModal
+              isModalVisible={isShow}
+              onCloseModal={onCloseModal}
+              onApplyModal={onApplyModal}
+            >
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode="date"
+                is24Hour={true}
+                display="default"
+                onChange={onChangeDate}
+                {...(Platform.OS === 'ios' && parseFloat(Platform.Version) >= 14
+                  ? null
+                  : { textColor: "white" })} // on ios 14+ causes crash
+              />
+            </BlackModal>
+          )}
+          <View style={styles.statisticsContainer}>
+            <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+              <Text style={[styles.headersText, {color: "lightcoral"}]}>{purchasesTotal}</Text>
+              <Text style={[styles.headersText, {color: "greenyellow"}]}>{incomesTotal}</Text>
+            </View>
+          </View>
+        </>
+      }
+      sections={events}
+      keyExtractor={(item, index) => item + index}
+      renderItem={({ item }) => <Event event={item} />}
+      renderSectionHeader={({ section: { title } }) => (
+        <View style={{paddingTop: 10, paddingBottom: 4}}>
+          <Text style={styles.eventDate}>{title}</Text>
+        </View>
+      )}
+    />
 	)
 }
 
