@@ -17,9 +17,11 @@ const reducer = (state, action) => {
     case 'set_initial_data':
       return action.data;
     case 'auth_success':
-      return {isAuth: true, user: action.data};
+      return {...state, isAuth: true, user: action.data};
     case 'auth_error':
-      return {isAuth: false, error: action.error};
+      return {...state, isAuth: false, error: action.error};
+    case 'get_user_success':
+      return {...state, user: action.data}
     default:
       throw new Error();
   }
@@ -37,6 +39,8 @@ const Login = ({children}) => {
     if (!loginDetails) return;
 
     const user = JSON.parse(loginDetails);
+
+    getUserById(user.id);
     return {
       isAuth: true,
       user,
@@ -65,10 +69,22 @@ const Login = ({children}) => {
       },
     })
       .then(response => {
-        AsyncStorage.setItem('loginDetails', JSON.stringify(response.data))
-        dispatch({type: 'auth_success', data: response.data})
+        AsyncStorage.setItem('loginDetails', JSON.stringify(response.data));
+        dispatch({type: 'auth_success', data: response.data});
       })
       .catch(error => dispatch({type: 'auth_error', error}));
+  }, [email, password]);
+  
+  const getUserById = useCallback((id) => {
+    axios.get(url(URL.USER.getById(id)), {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+    })
+      .then(response => {
+        AsyncStorage.setItem('loginDetails', JSON.stringify(response.data));
+        dispatch({type: 'get_user_success', data: response.data});
+      })
   }, [email, password]);
 
   const onClear = () => {

@@ -18,6 +18,7 @@ const URL = {
     categories: 'income/categories'
   },
   USER: {
+    getById: (id) => `user/${id}`,
     allInProject: 'user/allInProject',
     updateUser: 'user',
   },
