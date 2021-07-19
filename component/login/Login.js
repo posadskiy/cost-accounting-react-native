@@ -82,6 +82,7 @@ const Login = ({children}) => {
       },
     })
       .then(response => {
+        console.log(response.data);
         AsyncStorage.setItem('loginDetails', JSON.stringify(response.data));
         dispatch({type: 'get_user_success', data: response.data});
       })

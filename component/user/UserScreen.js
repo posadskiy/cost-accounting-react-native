@@ -8,12 +8,14 @@ import {UserContext} from "../login/Login";
 import EditableFieldModal from "../common/EditableFieldModal";
 import UserView from "./UserView";
 
-const User = () => {
+const UserScreen = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalText, setModalText] = useState();
   const [modalPlaceholder, setModalPlaceholder] = useState();
   const [modalHeader, setModalHeader] = useState();
   const [modalOnChangeText, setModalOnChangeText] = useState({});
+  
+  const goToCategories = () => navigation.navigate('CategoriesScreen');
 
   const showModal = (text, header, placeholder, setText) => {
     console.log(text, header, placeholder, setText)
@@ -44,6 +46,7 @@ const User = () => {
             <UserView
               user={user}
               showModal={showModal}
+              goToCategories={goToCategories}
             />
           )}
         </UserContext.Consumer>
@@ -52,4 +55,4 @@ const User = () => {
   )
 }
 
-export default User;
+export default UserScreen;

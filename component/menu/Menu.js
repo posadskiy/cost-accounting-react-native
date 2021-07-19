@@ -3,9 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Statistic from "../statistic/Statistic";
 import Chart from "../chart/Chart";
-import User from "../user/User";
+import UserScreen from "../user/UserScreen";
 import AddPurchase from "../moneyAction/AddPurchase";
 import AddIncome from "../moneyAction/AddIncome";
+import UserApp from "../user/UserApp";
 
 const Tab = createBottomTabNavigator();
 
@@ -68,7 +69,7 @@ const Menu = () => {
 			<Tab.Screen
         style={{backgroundColor: "black", color: "white"}}
 				name="Me"
-				component={User}
+				component={UserApp}
 				options={{
 					tabBarLabel: 'Me',
 					tabBarIcon: ({ color, size }) => (

@@ -3,6 +3,7 @@ import DefaultCurrencyInput from "./DefaultCurrencyInput";
 import Button from "../common/Button";
 import NameInput from "./NameInput";
 import {saveUser} from "../../actions/userActions";
+import Categories from "./Categories";
 
 const UserView = (props) => {
   const {
@@ -12,6 +13,7 @@ const UserView = (props) => {
       defaultCurrency,
     } = {},
     showModal,
+    goToCategories,
   } = props;
 
   const [newDefaultCurrency, setNewDefaultCurrency] = useState(defaultCurrency);
@@ -38,6 +40,9 @@ const UserView = (props) => {
         defaultCurrency={newDefaultCurrency}
         setDefaultCurrency={setNewDefaultCurrency}
         showModal={showModal}
+      />
+      <Categories
+        onPress={goToCategories}
       />
       <Button
         text="Save"
