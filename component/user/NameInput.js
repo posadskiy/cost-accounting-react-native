@@ -8,8 +8,6 @@ const NameInput = (props) => {
     showModal,
   } = props;
 
-  console.log(props);
-
   const openNameModal = () => showModal(name, "User name", "Your name", setName);
 
   return (

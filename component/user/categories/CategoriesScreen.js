@@ -10,7 +10,12 @@ const CategoriesScreen = (props) => {
     route: {
       name,
     } = {},
+    navigation,
   } = props;
+  
+  const navigateOnCategoryView = (category) => {
+    navigation.navigate('CategoryScreen', {category});
+  }
 
   const getCategoriesByType = (type, user) => {
     if ('PurchaseCategoriesScreen' === type) return user.purchaseCategories;
@@ -25,6 +30,7 @@ const CategoriesScreen = (props) => {
           return (
           <CategoriesView
             categories={categories}
+            navigate={navigateOnCategoryView}
           />
         )}
       }

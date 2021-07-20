@@ -7,6 +7,7 @@ import CategoryView from "./CategoryView";
 const CategoriesView = (props) => {
   const {
     categories = [],
+    navigate,
   } = props;
 
   return (
@@ -16,6 +17,7 @@ const CategoriesView = (props) => {
           <CategoryView
             key={category.id}
             category={category}
+            navigate={navigate}
           />
         ))
       }

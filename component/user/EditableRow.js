@@ -5,6 +5,7 @@ import styles from "../../Styles";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const EditableRow = ({header, value, onPress}) => {
+  console.log(header, value, onPress);
   return (
     <Pressable onPress={onPress} style={{display: "flex", flexDirection: "row", padding: 5}}>
       <Text style={[{flex: 1}, styles.headersText]}>{header}</Text>
