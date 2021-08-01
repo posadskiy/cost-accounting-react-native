@@ -33,7 +33,8 @@
     "react-native-screens": "3.4.0",
     "react-native-svg": "7.0.3",
     "react-native-svg-charts": "5.4.0",
-    "react-native-vector-icons": "8.1.0"
+    "react-native-vector-icons": "8.1.0",
+    "react-native-swipeable": "0.6.0"
   },
   "devDependencies": {
     "@babel/core": "7.14.6",
