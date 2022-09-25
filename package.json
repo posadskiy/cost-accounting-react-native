@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "iphone-11": "react-native run-ios --simulator=\"iPhone 11 14.2\"",
     "iphone-11-max": "react-native run-ios --simulator=\"iPhone 11 Max\"",
-    "iphone-11-pro": "react-native run-ios --simulator=\"iPhone 11 Pro\"",
+    "iphone-11-pro": "react-native run-ios --simulator=\"iPhone 13 Pro\"",
     "iphone-11-pro-max": "react-native run-ios --simulator=\"iPhone 11 Pro Max\"",
     "iphone-se": "react-native run-ios --simulator=\"iPhone SE (1st generation)\"",
     "start": "react-native start",
@@ -15,19 +15,19 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "1.15.5",
+    "@react-native-async-storage/async-storage": "1.17.10",
     "@react-native-community/datetimepicker": "3.5.2",
-    "@react-native-picker/picker": "1.16.3",
+    "@react-native-picker/picker": "2.4.4",
     "@react-navigation/bottom-tabs": "5.11.11",
     "@react-navigation/native": "5.9.4",
     "@react-navigation/stack": "5.14.5",
     "react-native-gesture-handler": "1.10.3",
-    "react-native-reanimated": "2.2.0",
+    "react-native-reanimated": "2.3.3",
     "@react-native-community/masked-view": "0.1.11",
     "axios": "0.21.1",
     "crypto-js": "4.0.0",
-    "react": "17.0.1",
-    "react-native": "0.64.1",
+    "react": "18.1.0",
+    "react-native": "0.70.1",
     "react-native-modal": "11.10.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "3.4.0",
@@ -46,7 +46,7 @@
     "jest": "27.0.6",
     "metro": "0.64.0",
     "metro-react-native-babel-preset": "0.66.1",
-    "react-test-renderer": "17.0.2"
+    "react-test-renderer": "18.0.0"
   },
   "jest": {
     "preset": "react-native"

@@ -36,7 +36,7 @@ const URL = {
     projectMonthsList: 'statistics/projectMonthsList',
   },
   LOGIN: {
-    login: 'login/auth',
+    login: 'auth/login/v1/auth',
   },
 };
 
