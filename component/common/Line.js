@@ -3,7 +3,7 @@ import React from "react";
 
 const Line = () => {
   return (
-    <View style={{backgroundColor: "#666666", height: 2, width: "100%"}} />
+    <View style={{backgroundColor: "#666666", height: 2, width: "100%"}}/>
   )
 }
 

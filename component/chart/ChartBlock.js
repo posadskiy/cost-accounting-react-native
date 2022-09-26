@@ -1,12 +1,7 @@
-import React, {useContext, useState, useEffect} from 'react';
-
-import {
-  View,
-  Text,
-  Alert,
-} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {Alert, Text, View,} from 'react-native';
 import styles from "../../Styles";
-import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
+import {Grid, LineChart, XAxis, YAxis} from 'react-native-svg-charts';
 import axios from "axios";
 import {URL, url} from "../../common/URL";
 import {UserContext} from "../login/Login";
@@ -35,7 +30,7 @@ const ChartBlock = () => {
       .then(result => mapStatistics(result.data))
       .catch(error => Alert.alert(error.response.data.title, error.response.data.message));
   };
-  
+
   const mapStatistics = (data) => {
     const amounts = [];
     const todayLimits = [];
@@ -51,7 +46,7 @@ const ChartBlock = () => {
       limits.push(category.limit);
       resultCategories.push(category.category.name);
     })
-    
+
     setAmounts(amounts);
     setTodayLimits(todayLimits);
     setLimits(limits);
@@ -63,57 +58,57 @@ const ChartBlock = () => {
   const data = [
     {
       data: amounts,
-      svg: { stroke: 'lightgreen' },
+      svg: {stroke: 'lightgreen'},
     },
     {
       data: todayLimits,
-      svg: { stroke: 'yellow' },
+      svg: {stroke: 'yellow'},
     },
     {
       data: limits,
-      svg: { stroke: 'red' },
+      svg: {stroke: 'red'},
     }
   ];
-  
+
   const xData = data[0].data;
 
-  const verticalContentInset = { top: 10, bottom: 10 }
+  const verticalContentInset = {top: 10, bottom: 10}
   const xAxisHeight = 30
 
   return (
     <>
-    <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
-      <Text style={[styles.generalText, {color: 'lightgreen'}]}>Current spent</Text>
-      <Text style={[styles.generalText, {color: 'yellow'}]}>Limit on today</Text>
-      <Text style={[styles.generalText, {color: 'red'}]}>Month limit</Text>
-    </View>
-    <View style={{ height: 300, padding: 20, flexDirection: 'row' }}>
-      <YAxis
-        data={xData}
-        style={{ marginBottom: xAxisHeight }}
-        contentInset={verticalContentInset}
-        svg={{ fontSize: 14, fill: 'white' }}
-      />
-      <View style={{ flex: 1, marginLeft: 10 }}>
-        <LineChart
-          style={{ height: 200 }}
-          data={data}
-          gridMin={0}
-          contentInset={{ top: 10, bottom: 10 }}
-          svg={{ stroke: 'rgb(134, 65, 244)' }}
-        >
-          <Grid svg={{stroke: "white", opacity: 0.2}} />
-        </LineChart>
-        <XAxis
-          style={{ marginHorizontal: -10 }}
-          data={xData}
-          formatLabel={(value, index) => categories[index]}
-          contentInset={{ left: 10, right: 10 }}
-          svg={{ fontSize: 14, fill: 'white' }}
-        />
+      <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
+        <Text style={[styles.generalText, {color: 'lightgreen'}]}>Current spent</Text>
+        <Text style={[styles.generalText, {color: 'yellow'}]}>Limit on today</Text>
+        <Text style={[styles.generalText, {color: 'red'}]}>Month limit</Text>
       </View>
-    </View>
-  </>
+      <View style={{height: 300, padding: 20, flexDirection: 'row'}}>
+        <YAxis
+          data={xData}
+          style={{marginBottom: xAxisHeight}}
+          contentInset={verticalContentInset}
+          svg={{fontSize: 14, fill: 'white'}}
+        />
+        <View style={{flex: 1, marginLeft: 10}}>
+          <LineChart
+            style={{height: 200}}
+            data={data}
+            gridMin={0}
+            contentInset={{top: 10, bottom: 10}}
+            svg={{stroke: 'rgb(134, 65, 244)'}}
+          >
+            <Grid svg={{stroke: "white", opacity: 0.2}}/>
+          </LineChart>
+          <XAxis
+            style={{marginHorizontal: -10}}
+            data={xData}
+            formatLabel={(value, index) => categories[index]}
+            contentInset={{left: 10, right: 10}}
+            svg={{fontSize: 14, fill: 'white'}}
+          />
+        </View>
+      </View>
+    </>
   )
 }
 

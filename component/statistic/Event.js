@@ -1,5 +1,5 @@
-import React, {useContext, useCallback} from 'react';
-import {Text, View, TouchableHighlight, Alert} from "react-native";
+import React, {useCallback, useContext} from 'react';
+import {Alert, Text, TouchableHighlight, View} from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import styles from "../../Styles";
 import {URL, url} from '../../common/URL';
@@ -48,9 +48,20 @@ const Event = ({event}) => {
         ]
       )}
     >
-      <View key={event.id || event.date} style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-        <View style={{flex: 2, display: "flex",flexDirection: "column", alignContent: "center", alignItems: "center", alignSelf: "center"}}>
-          <FontAwesome5 style={{alignSelf: "center"}} color="yellow" name={event.category.emoji} size={25} />
+      <View key={event.id || event.date} style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
+      }}>
+        <View style={{
+          flex: 2,
+          display: "flex",
+          flexDirection: "column",
+          alignContent: "center",
+          alignItems: "center",
+          alignSelf: "center"
+        }}>
+          <FontAwesome5 style={{alignSelf: "center"}} color="yellow" name={event.category.emoji} size={25}/>
         </View>
         <View style={{flex: 13, display: "flex", flexDirection: "column"}}>
           <Text style={styles.eventName}>{event.name}</Text>

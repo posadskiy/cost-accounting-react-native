@@ -1,7 +1,4 @@
-import React, {useState} from 'react';
-import {
-  View,
-} from "react-native";
+import React from 'react';
 import EditableRow from "./EditableRow";
 
 const DefaultCurrencyInput = (props) => {
@@ -10,9 +7,7 @@ const DefaultCurrencyInput = (props) => {
     setDefaultCurrency,
     showModal,
   } = props;
-  
-  console.log(props);
-  
+
   const openDefaultCurrencyModal = () => showModal(defaultCurrency, "Default currency", "USD", setDefaultCurrency);
 
   return (

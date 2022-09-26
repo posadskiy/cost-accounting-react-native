@@ -1,5 +1,5 @@
-import React, {useState, useReducer, useEffect, createContext, useCallback} from 'react';
-import {Text, TextInput, View, Button} from 'react-native';
+import React, {createContext, useCallback, useEffect, useReducer, useState} from 'react';
+import {Button, Text, TextInput, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../../Styles';
 import axios from 'axios';
@@ -34,7 +34,7 @@ const Login = ({children}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const getLoginData = async() => {
+  const getLoginData = async () => {
     let loginDetails = await AsyncStorage.getItem('loginDetails');
     if (!loginDetails) return;
 
@@ -55,6 +55,7 @@ const Login = ({children}) => {
         dispatch({type: 'set_initial_data', data: loginData});
       }
     }
+
     login();
   }, [dispatch])
 
@@ -74,7 +75,7 @@ const Login = ({children}) => {
       })
       .catch(error => dispatch({type: 'auth_error', error}));
   }, [email, password]);
-  
+
   const getUserById = useCallback((id) => {
     axios.get(url(URL.USER.getById(id)), {
       headers: {
@@ -137,8 +138,8 @@ const Login = ({children}) => {
         autoCapitalize="none"
         secureTextEntry={true}
       />
-      <Button onPress={onClear} title="Clear" />
-      <Button onPress={onLogin} title="Login" />
+      <Button onPress={onClear} title="Clear"/>
+      <Button onPress={onLogin} title="Login"/>
     </View>
   );
 };

@@ -3,8 +3,8 @@ import styles from "../../../Styles";
 import {ScrollView} from "react-native";
 import CategoriesPasser from "./CategoriesPasser";
 
-const CategoriesTypeScreen = ({ navigation }) => {
-  
+const CategoriesTypeScreen = ({navigation}) => {
+
   const goToPurchaseCategories = () => navigation.navigate('PurchaseCategoriesScreen');
   const goToIncomeCategories = () => navigation.navigate('IncomeCategoriesScreen');
 

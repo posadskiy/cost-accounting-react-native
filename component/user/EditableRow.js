@@ -11,7 +11,7 @@ const EditableRow = ({header, value, onPress}) => {
       <Text style={[{flex: 1}, styles.headersText]}>{header}</Text>
       <View style={{flex: 1, display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
         <Text style={styles.generalTextRight}>{value}</Text>
-        <FontAwesome5 style={{alignSelf: "center", paddingLeft: 5}} color="white" name="angle-right" size={25} />
+        <FontAwesome5 style={{alignSelf: "center", paddingLeft: 5}} color="white" name="angle-right" size={25}/>
       </View>
     </Pressable>
   )

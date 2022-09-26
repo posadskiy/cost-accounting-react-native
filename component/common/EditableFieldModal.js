@@ -1,14 +1,10 @@
 import React from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-} from "react-native";
+import {Text, TextInput, View,} from "react-native";
 import BlackModal from "./Modal";
 import styles from "../../Styles";
 
 const EditableFieldModal = ({isVisible, setIsVisible, onChangeText, header, text, setText, placeholder = ""}) => {
-  
+
   const onApplyModal = () => {
     setIsVisible(false);
   }

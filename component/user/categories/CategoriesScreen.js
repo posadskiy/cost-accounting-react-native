@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-  View,
-} from "react-native";
 import CategoriesView from "./CategoriesView";
 import {UserContext} from "../../login/Login";
 
@@ -12,7 +9,7 @@ const CategoriesScreen = (props) => {
     } = {},
     navigation,
   } = props;
-  
+
   const navigateOnCategoryView = (category) => {
     navigation.navigate('CategoryScreen', {category});
   }
@@ -28,11 +25,12 @@ const CategoriesScreen = (props) => {
         user => {
           const categories = getCategoriesByType(name, user);
           return (
-          <CategoriesView
-            categories={categories}
-            navigate={navigateOnCategoryView}
-          />
-        )}
+            <CategoriesView
+              categories={categories}
+              navigate={navigateOnCategoryView}
+            />
+          )
+        }
       }
     </UserContext.Consumer>
   )

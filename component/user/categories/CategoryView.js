@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "../../../Styles";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Swipeable from "react-native-swipeable";
-import {Button, Text, TouchableHighlight, View} from "react-native";
+import {Text, TouchableHighlight, View} from "react-native";
 
 const CategoryView = (props) => {
   const {
@@ -14,7 +14,7 @@ const CategoryView = (props) => {
   } = props;
 
   const rightButtons = [<TouchableHighlight><Text style={styles.generalText}>Button 1</Text></TouchableHighlight>];
-  
+
   return (
     <Swipeable
       rightContent={
@@ -29,7 +29,7 @@ const CategoryView = (props) => {
       }}
     >
       <View style={{display: "flex", flexDirection: "row"}}>
-        <FontAwesome5 style={{alignSelf: "center"}} color="yellow" name={emoji} size={25} />
+        <FontAwesome5 style={{alignSelf: "center"}} color="yellow" name={emoji} size={25}/>
         <Text style={styles.generalText}>{name}</Text>
       </View>
     </Swipeable>

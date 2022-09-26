@@ -41,31 +41,31 @@ const URL = {
 };
 
 const url = (url) => {
-	let server;
+  let server;
 
-	switch (mode) {
-		case LOCAL: {
-			server = LOCAL_SERVER;
-			break;
-		}
-		case PRODUCTION: {
-			server = PRODUCTION_SERVER;
-			break;
-		}
+  switch (mode) {
+    case LOCAL: {
+      server = LOCAL_SERVER;
+      break;
+    }
+    case PRODUCTION: {
+      server = PRODUCTION_SERVER;
+      break;
+    }
     case EBS: {
       server = EBS_SERVER;
       break;
     }
-		default: {
-			server = LOCAL_SERVER;
-			break;
-		}
-	}
+    default: {
+      server = LOCAL_SERVER;
+      break;
+    }
+  }
 
-	return server + url;
+  return server + url;
 }
 
 export {
-	URL,
-	url,
+  URL,
+  url,
 }

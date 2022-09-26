@@ -1,9 +1,5 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {
-  Alert,
-  View,
-  Text,
-} from "react-native";
+import React, {useContext, useEffect, useState} from 'react';
+import {Alert, Text, View,} from "react-native";
 import styles from "../../Styles";
 import {Picker} from "@react-native-picker/picker";
 import BlackModal from "../common/Modal";
@@ -35,7 +31,7 @@ const Chart = () => {
 
     receiveCurrentMonthStatistics(selectedMonth);
   }
-  
+
   const onChangeSelectedMonth = (newSelectedMonth) => {
     setSelectedMonth(newSelectedMonth);
   }
@@ -64,7 +60,7 @@ const Chart = () => {
     ];
     const monthName = month.split(" ")[0];
     const yearName = month.split(" ")[1];
-    
+
     const body = JSON.stringify({
       userId: user.id,
       year: yearName,
@@ -80,7 +76,7 @@ const Chart = () => {
       .then(result => mapStatistics(result.data))
       .catch(error => Alert.alert(error.response.data.title, error.response.data.message));
   };
-  
+
   const mapStatistics = (statistics) => {
     const purchaseCategories = [];
     const incomeCategories = [];
@@ -88,14 +84,14 @@ const Chart = () => {
     Object.keys(statistics.incomeCategories).map(key => incomeCategories.push(statistics.incomeCategories[key]));
     setPurchaseCategories(purchaseCategories);
     setIncomeCategories(incomeCategories);
-    
+
     const purchasesTotal = purchaseCategories.reduce((total, value) => total + value.amount, 0).toFixed();
     const incomesTotal = incomeCategories.reduce((total, value) => total + value.amount, 0).toFixed();
     const purchasesLimit = purchaseCategories.reduce((total, value) => total + value.limit, 0).toFixed();
-    
+
     setPurchasesTotal(purchasesTotal);
     setPurchasesLimit(purchasesLimit);
-    
+
     setIncomesTotal(incomesTotal);
   }
 
@@ -119,14 +115,14 @@ const Chart = () => {
           >
             {
               months.map(month => (
-                <Picker.Item key={month} label={month} value={month} />
+                <Picker.Item key={month} label={month} value={month}/>
               ))
             }
           </Picker>
         </BlackModal>
       </View>
       <View>
-        <BetweenGrayBlocks />
+        <BetweenGrayBlocks/>
         <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
           <Text style={styles.eventDate}>Purchases</Text>
           <Text style={styles.eventDate}>{purchasesTotal} / {purchasesLimit} $</Text>
@@ -139,10 +135,10 @@ const Chart = () => {
               } = {}
             } = purchaseCategory;
 
-            return <StatisticRow key={id} category={purchaseCategory} />
+            return <StatisticRow key={id} category={purchaseCategory}/>
           })
         }
-        <BetweenGrayBlocks />
+        <BetweenGrayBlocks/>
         <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
           <Text style={styles.eventDate}>Incomes</Text>
           <Text style={styles.eventDate}>{incomesTotal} $</Text>
@@ -154,7 +150,7 @@ const Chart = () => {
                 id,
               } = {}
             } = incomeCategory;
-            return <StatisticRow key={id} category={incomeCategory} />
+            return <StatisticRow key={id} category={incomeCategory}/>
           })
         }
       </View>

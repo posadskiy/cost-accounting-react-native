@@ -1,7 +1,6 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import UserScreen from "./UserScreen";
-import CategoriesTypeScreen from "./categories/CategoriesTypeScreen";
 import CategoriesApp from "./categories/CategoriesApp";
 
 const User = createStackNavigator();
@@ -9,8 +8,8 @@ const User = createStackNavigator();
 const UserApp = () => {
   return (
     <User.Navigator>
-      <User.Screen name="UserScreen" component={UserScreen} />
-      <User.Screen name="CategoriesScreen" component={CategoriesApp} options={{ headerShown: false }}/>
+      <User.Screen name="UserScreen" component={UserScreen}/>
+      <User.Screen name="CategoriesScreen" component={CategoriesApp} options={{headerShown: false}}/>
     </User.Navigator>
   )
 };

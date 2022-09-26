@@ -11,9 +11,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 function wait(timeout) {
-	return new Promise(resolve => {
-		setTimeout(resolve, timeout);
-	});
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
 }
 
 const defaultCategory = {
@@ -25,10 +25,10 @@ const defaultYear = new Date().getFullYear();
 const defaultMonth = new Date().getMonth() + 1;
 
 const Statistic = () => {
-	const [refreshing, setRefreshing] = useState(false);
-	const [events, setEvents] = useState([]);
-	const [monthPurchasesTotal, setMonthPurchasesTotal] = useState(defaultCategory);
-	const [monthIncomesTotal, setMonthIncomesTotal] = useState(defaultCategory);
+  const [refreshing, setRefreshing] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [monthPurchasesTotal, setMonthPurchasesTotal] = useState(defaultCategory);
+  const [monthIncomesTotal, setMonthIncomesTotal] = useState(defaultCategory);
   const [monthPurchasesTotalForUser, setMonthPurchasesTotalForUser] = useState(defaultCategory);
   const [monthIncomesTotalForUser, setMonthIncomesTotalForUser] = useState(defaultCategory);
   const [isShow, setIsShow] = useState(false);
@@ -37,19 +37,19 @@ const Statistic = () => {
   const [date, setDate] = useState(new Date());
   const user = useContext(UserContext);
 
-	const onRefresh = React.useCallback(() => {
-		setRefreshing(true);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
 
-		receiveEvents();
-		receiveMonthPurchasesTotal();
-		receiveMonthIncomesTotal();
-		receiveMonthPurchasesTotalForUser();
-		receiveMonthIncomesTotalForUser();
+    receiveEvents();
+    receiveMonthPurchasesTotal();
+    receiveMonthIncomesTotal();
+    receiveMonthPurchasesTotalForUser();
+    receiveMonthIncomesTotalForUser();
 
-		wait(2000).then(() => setRefreshing(false));
-	}, [refreshing]);
-	
-	const getBody = () => {
+    wait(2000).then(() => setRefreshing(false));
+  }, [refreshing]);
+
+  const getBody = () => {
     return JSON.stringify({
       userId: user.id,
       year,
@@ -57,72 +57,72 @@ const Statistic = () => {
     });
   }
 
-	const receiveEvents = () => {
-	  const body = getBody();
+  const receiveEvents = () => {
+    const body = getBody();
 
-		axios.post(url(URL.STATISTICS.events), body,
-			{
-				headers: {
-					'Content-Type': 'application/json'
-				},
-			})
-			.then(result => setEvents(mapEvents(result.data)))
-			.catch(error => console.error(error));
-	}
+    axios.post(url(URL.STATISTICS.events), body,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(result => setEvents(mapEvents(result.data)))
+      .catch(error => console.error(error));
+  }
 
-	const receiveMonthPurchasesTotal = () => {
-	  const body = getBody();
+  const receiveMonthPurchasesTotal = () => {
+    const body = getBody();
 
-		axios.post(url(URL.STATISTICS.monthPurchaseTotal), body,
-			{
-				headers: {
-					'Content-Type': 'application/json'
-				},
-			})
-			.then(result => setMonthPurchasesTotal(result.data))
-			.catch(() => setMonthPurchasesTotal(defaultCategory));
-	}
-	
-	const receiveMonthIncomesTotal = () => {
-	  const body = getBody();
+    axios.post(url(URL.STATISTICS.monthPurchaseTotal), body,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(result => setMonthPurchasesTotal(result.data))
+      .catch(() => setMonthPurchasesTotal(defaultCategory));
+  }
 
-		axios.post(url(URL.STATISTICS.monthIncomeTotal), body,
-			{
-				headers: {
-					'Content-Type': 'application/json'
-				},
-			})
-			.then(result => setMonthIncomesTotal(result.data))
-			.catch(() => setMonthIncomesTotal(defaultCategory));
-	}
-	
-	const receiveMonthPurchasesTotalForUser = () => {
-	  const body = getBody();
+  const receiveMonthIncomesTotal = () => {
+    const body = getBody();
 
-		axios.post(url(URL.STATISTICS.monthPurchaseTotalForUser), body,
-			{
-				headers: {
-					'Content-Type': 'application/json'
-				},
-			})
-			.then(result => setMonthPurchasesTotalForUser(result.data))
-			.catch(() => setMonthPurchasesTotalForUser(defaultCategory));
-	}
-	
-	const receiveMonthIncomesTotalForUser = () => {
-	  const body = getBody();
+    axios.post(url(URL.STATISTICS.monthIncomeTotal), body,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(result => setMonthIncomesTotal(result.data))
+      .catch(() => setMonthIncomesTotal(defaultCategory));
+  }
 
-		axios.post(url(URL.STATISTICS.monthIncomeTotalForUser), body,
-			{
-				headers: {
-					'Content-Type': 'application/json'
-				},
-			})
-			.then(result => setMonthIncomesTotalForUser(result.data))
-			.catch(() => setMonthIncomesTotalForUser(defaultCategory));
-	}
-	
-	const mapEvents = (events) => Object.keys(events).map((key, index) => {
+  const receiveMonthPurchasesTotalForUser = () => {
+    const body = getBody();
+
+    axios.post(url(URL.STATISTICS.monthPurchaseTotalForUser), body,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(result => setMonthPurchasesTotalForUser(result.data))
+      .catch(() => setMonthPurchasesTotalForUser(defaultCategory));
+  }
+
+  const receiveMonthIncomesTotalForUser = () => {
+    const body = getBody();
+
+    axios.post(url(URL.STATISTICS.monthIncomeTotalForUser), body,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(result => setMonthIncomesTotalForUser(result.data))
+      .catch(() => setMonthIncomesTotalForUser(defaultCategory));
+  }
+
+  const mapEvents = (events) => Object.keys(events).map((key, index) => {
     return {
       "title": createDateFromKey(key),
       "data": events[key],
@@ -133,7 +133,7 @@ const Statistic = () => {
   const createDateFromKey = (key) => {
     return createTwoDigitsDateItem(+key) + "." + createTwoDigitsDateItem(date.getMonth() + 1) + "." + createTwoDigitsDateItem(date.getFullYear());
   }
-  
+
   const createTwoDigitsDateItem = (value) => {
     return value < 10 ? '0' + value : value;
   }
@@ -151,22 +151,22 @@ const Statistic = () => {
     receiveMonthPurchasesTotalForUser();
     receiveMonthIncomesTotalForUser();
   }
-  
+
   const onChangeDate = (event, selectedDate) => {
     setDate(selectedDate);
     setYear(selectedDate.getFullYear());
     setMonth(selectedDate.getMonth() + 1);
   }
 
-	useEffect(() => receiveEvents(), [events.length]);
-	useEffect(() => receiveMonthPurchasesTotal(), [monthPurchasesTotal.month]);
-	useEffect(() => receiveMonthIncomesTotal(), [monthIncomesTotal.month]);
-	useEffect(() => receiveMonthPurchasesTotalForUser(), [monthPurchasesTotalForUser.amount]);
-	useEffect(() => receiveMonthIncomesTotalForUser(), [monthIncomesTotalForUser.amount]);
+  useEffect(() => receiveEvents(), [events.length]);
+  useEffect(() => receiveMonthPurchasesTotal(), [monthPurchasesTotal.month]);
+  useEffect(() => receiveMonthIncomesTotal(), [monthIncomesTotal.month]);
+  useEffect(() => receiveMonthPurchasesTotalForUser(), [monthPurchasesTotalForUser.amount]);
+  useEffect(() => receiveMonthIncomesTotalForUser(), [monthIncomesTotalForUser.amount]);
 
   const purchasesTotal = `${monthPurchasesTotalForUser.amount.toFixed(0)}$ / ${monthPurchasesTotal.amount.toFixed(0)}$ / ${monthPurchasesTotal.limit.toFixed(0)}$`;
   const incomesTotal = `${monthIncomesTotalForUser.amount.toFixed(0)}$ / ${monthIncomesTotal.amount.toFixed(0)}$`;
-	return (
+  return (
     <SectionList
       contentInsetAdjustmentBehavior="automatic"
       style={styles.scrollView}
@@ -181,7 +181,10 @@ const Statistic = () => {
       ListHeaderComponent={
         <>
           <Pressable onPress={() => setIsShow(true)}>
-            <Text style={[styles.headersText, {color: "khaki"}]}>{date.toLocaleDateString("en-US", {year: "numeric", month:"long"})}</Text>
+            <Text style={[styles.headersText, {color: "khaki"}]}>{date.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long"
+            })}</Text>
           </Pressable>
           {isShow && (
             <BlackModal
@@ -198,7 +201,7 @@ const Statistic = () => {
                 onChange={onChangeDate}
                 {...(Platform.OS === 'ios' && parseFloat(Platform.Version) >= 14
                   ? null
-                  : { textColor: "white" })} // on ios 14+ causes crash
+                  : {textColor: "white"})} // on ios 14+ causes crash
               />
             </BlackModal>
           )}
@@ -212,14 +215,14 @@ const Statistic = () => {
       }
       sections={events}
       keyExtractor={(item, index) => item + index}
-      renderItem={({ item }) => <Event event={item} />}
-      renderSectionHeader={({ section: { title } }) => (
+      renderItem={({item}) => <Event event={item}/>}
+      renderSectionHeader={({section: {title}}) => (
         <View style={{paddingTop: 10, paddingBottom: 4}}>
           <Text style={styles.eventDate}>{title}</Text>
         </View>
       )}
     />
-	)
+  )
 }
 
 export default Statistic;

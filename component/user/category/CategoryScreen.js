@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  ScrollView,
-  View,
-} from "react-native";
-import {UserContext} from "../../login/Login";
+import {ScrollView, View,} from "react-native";
 import CategoryView from "./CategoryView";
 import styles from "../../../Styles";
 

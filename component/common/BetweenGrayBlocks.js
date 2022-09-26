@@ -3,7 +3,7 @@ import React from "react";
 
 const BetweenGrayBlocks = () => {
   return (
-    <View style={{paddingTop: 14}} />
+    <View style={{paddingTop: 14}}/>
   )
 }
 

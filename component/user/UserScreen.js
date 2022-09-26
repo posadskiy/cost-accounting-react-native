@@ -1,20 +1,17 @@
-import React, {useState, useContext, useEffect} from 'react';
-import {
-  View,
-  ScrollView,
-} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, View,} from 'react-native';
 import styles from "../../Styles";
 import {UserContext} from "../login/Login";
 import EditableFieldModal from "../common/EditableFieldModal";
 import UserView from "./UserView";
 
-const UserScreen = ({ navigation }) => {
+const UserScreen = ({navigation}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalText, setModalText] = useState();
   const [modalPlaceholder, setModalPlaceholder] = useState();
   const [modalHeader, setModalHeader] = useState();
   const [modalOnChangeText, setModalOnChangeText] = useState({});
-  
+
   const goToCategories = () => navigation.navigate('CategoriesScreen');
 
   const showModal = (text, header, placeholder, setText) => {
@@ -25,7 +22,7 @@ const UserScreen = ({ navigation }) => {
     setModalOnChangeText({setText})
     setIsModalVisible(true);
   }
-  
+
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"

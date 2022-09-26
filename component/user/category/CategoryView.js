@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  View,
-} from "react-native";
+import {View,} from "react-native";
 import EditableRow from "../EditableRow";
 
 const CategoryView = (props) => {
@@ -14,30 +12,34 @@ const CategoryView = (props) => {
       isIncome,
     } = {},
   } = props;
-  
+
   console.log(name);
-  
+
   return (
     <View>
       <EditableRow
         header="Name"
         value={name}
-        onPress={() => {}}
+        onPress={() => {
+        }}
       />
       <EditableRow
         header="Emoji"
         value={emoji}
-        onPress={() => {}}
+        onPress={() => {
+        }}
       />
       <EditableRow
         header="Purchase"
         value={isPurchase}
-        onPress={() => {}}
+        onPress={() => {
+        }}
       />
       <EditableRow
         header="Income"
         value={isIncome}
-        onPress={() => {}}
+        onPress={() => {
+        }}
       />
     </View>
   )
