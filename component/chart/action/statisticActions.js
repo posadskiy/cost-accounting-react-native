@@ -9,7 +9,7 @@ const loadProjectMonths = async (request) => {
 }
 
 const loadStatisticsMonths = async (request) => {
-  const result = await axios.post(url(URL.STATISTICS.month), request,defaultConfig);
+  const result = await axios.post(url(URL.STATISTICS.month), request, defaultConfig);
 
   return result.data;
 }

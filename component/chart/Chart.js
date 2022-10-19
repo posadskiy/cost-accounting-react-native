@@ -31,11 +31,12 @@ const Chart = () => {
   }
 
   const months = useReceiveProjectMonths(user.id);
-  if (!months || months.length === 0) return <View><Text style={styles.eventDate}>Statistics is not ready</Text></View>;
+  if (!months || months.length === 0) return <View><Text style={styles.eventDate}>Statistics are not ready yet</Text></View>;
+
   setSelectedMonth(months[0]);
   const statistics = useReceiveCurrentMonthStatistics(months[0], user.id);
   
-  if (!statistics) return <View><Text style={styles.eventDate}>Statistics is not ready</Text></View>;
+  if (!statistics) return <View><Text style={styles.eventDate}>Statistics are not ready yet</Text></View>;
   const [purchaseCategories, incomeCategories, purchasesTotal, purchasesLimit, incomesTotal] = mapStatistics(statistics);
 
   return (

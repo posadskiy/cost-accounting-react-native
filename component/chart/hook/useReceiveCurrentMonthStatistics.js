@@ -1,5 +1,3 @@
-import axios from "axios";
-import {URL, url} from "../../../common/URL";
 import {Alert} from "react-native";
 import {useEffect, useState} from "react";
 import {loadStatisticsMonths} from "../action/statisticActions";
