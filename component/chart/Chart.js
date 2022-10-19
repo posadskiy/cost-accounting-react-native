@@ -1,25 +1,19 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Alert, Text, View,} from "react-native";
+import React, {useContext, useState} from 'react';
+import {Text, View,} from "react-native";
 import styles from "../../Styles";
 import {Picker} from "@react-native-picker/picker";
 import BlackModal from "../common/Modal";
-import {loadProjectMonths} from "../../actions/statisticActions";
 import Button from "../common/Button";
 import {UserContext} from "../login/Login";
-import axios from "axios";
-import {URL, url} from "../../common/URL";
 import StatisticRow from "./StatisticRow";
 import BetweenGrayBlocks from "../common/BetweenGrayBlocks";
+import useReceiveProjectMonths from "./hook/useReceiveProjectMonths";
+import useReceiveCurrentMonthStatistics from "./hook/useReceiveCurrentMonthStatistics";
+import mapStatistics from "./mapper/mapStatistics";
 
 const Chart = () => {
   const [isShow, setIsShow] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState("Not selected");
-  const [months, setMonths] = useState([]);
-  const [purchaseCategories, setPurchaseCategories] = useState([]);
-  const [incomeCategories, setIncomeCategories] = useState([]);
-  const [purchasesTotal, setPurchasesTotal] = useState(0);
-  const [incomesTotal, setIncomesTotal] = useState(0);
-  const [purchasesLimit, setPurchasesLimit] = useState(0);
   const user = useContext(UserContext);
 
   const onCloseModal = () => {
@@ -29,71 +23,20 @@ const Chart = () => {
   const onApplyModal = () => {
     setIsShow(false);
 
-    receiveCurrentMonthStatistics(selectedMonth);
+    useReceiveCurrentMonthStatistics(selectedMonth, user.id);
   }
 
   const onChangeSelectedMonth = (newSelectedMonth) => {
     setSelectedMonth(newSelectedMonth);
   }
 
-  useEffect(() => {
-    const receiveProjectMonths = async () => {
-      const body = JSON.stringify({
-        userId: user.id,
-      });
-
-      const months = await loadProjectMonths(body);
-
-      setMonths(months);
-      setSelectedMonth(months[0]);
-      receiveCurrentMonthStatistics(months[0]);
-    };
-
-    receiveProjectMonths();
-  }, [months.length]);
-
-  const receiveCurrentMonthStatistics = (month) => {
-    const monthNames = [
-      "January", "February", "March", "April", "May",
-      "June", "July", "August", "September", "October",
-      "November", "December"
-    ];
-    const monthName = month.split(" ")[0];
-    const yearName = month.split(" ")[1];
-
-    const body = JSON.stringify({
-      userId: user.id,
-      year: yearName,
-      month: monthNames.indexOf(monthName) + 1,
-    });
-
-    axios.post(url(URL.STATISTICS.month), body,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(result => mapStatistics(result.data))
-      .catch(error => Alert.alert(error.response.data.title, error.response.data.message));
-  };
-
-  const mapStatistics = (statistics) => {
-    const purchaseCategories = [];
-    const incomeCategories = [];
-    Object.keys(statistics.purchaseCategories).map(key => purchaseCategories.push(statistics.purchaseCategories[key]));
-    Object.keys(statistics.incomeCategories).map(key => incomeCategories.push(statistics.incomeCategories[key]));
-    setPurchaseCategories(purchaseCategories);
-    setIncomeCategories(incomeCategories);
-
-    const purchasesTotal = purchaseCategories.reduce((total, value) => total + value.amount, 0).toFixed();
-    const incomesTotal = incomeCategories.reduce((total, value) => total + value.amount, 0).toFixed();
-    const purchasesLimit = purchaseCategories.reduce((total, value) => total + value.limit, 0).toFixed();
-
-    setPurchasesTotal(purchasesTotal);
-    setPurchasesLimit(purchasesLimit);
-
-    setIncomesTotal(incomesTotal);
-  }
+  const months = useReceiveProjectMonths(user.id);
+  if (!months || months.length === 0) return <View><Text style={styles.eventDate}>Statistics is not ready</Text></View>;
+  setSelectedMonth(months[0]);
+  const statistics = useReceiveCurrentMonthStatistics(months[0], user.id);
+  
+  if (!statistics) return <View><Text style={styles.eventDate}>Statistics is not ready</Text></View>;
+  const [purchaseCategories, incomeCategories, purchasesTotal, purchasesLimit, incomesTotal] = mapStatistics(statistics);
 
   return (
     <View style={{padding: 14}}>
