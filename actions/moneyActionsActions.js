@@ -30,7 +30,10 @@ const loadCurrencies = async () => {
 
 const savePurchase = async (body) => {
   try {
-    return await axios.post(url(URL.PURCHASE.add), body, defaultConfig);
+    const result = await axios.post(url(URL.PURCHASE.add), body, defaultConfig);
+    await axios.post(url(URL.PROJECT_PURCHASE.add), body, defaultConfig);
+    
+    return result;
   } catch (e) {
     return e.response;
   }
@@ -38,7 +41,10 @@ const savePurchase = async (body) => {
 
 const saveIncome = async (body) => {
   try {
-    return await axios.post(url(URL.INCOME.add), body, defaultConfig);
+    const result = await axios.post(url(URL.INCOME.add), body, defaultConfig);
+    await axios.post(url(URL.PROJECT_INCOME.add), body, defaultConfig);
+    
+    return result;
   } catch (e) {
     return e.response;
   }

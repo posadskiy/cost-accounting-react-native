@@ -31,7 +31,7 @@ import GrayBlock from "../common/GrayBlock";
 import ProjectUser from "./ProjectUser";
 
 const MoneyAction = ({mode}) => {
-  const DEFAULT_CURRENCY = "RUB";
+  const DEFAULT_CURRENCY = "USD";
   const PURCHASE_MODE = "PURCHASE";
   const INCOME_MODE = "INCOME";
 

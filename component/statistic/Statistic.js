@@ -60,7 +60,7 @@ const Statistic = () => {
   const receiveEvents = () => {
     const body = getBody();
 
-    axios.post(url(URL.STATISTICS.events), body,
+    axios.post(url(URL.EVENTS.month), body,
       {
         headers: {
           'Content-Type': 'application/json'
