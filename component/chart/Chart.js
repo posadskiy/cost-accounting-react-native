@@ -9,7 +9,8 @@ import StatisticRow from "./StatisticRow";
 import BetweenGrayBlocks from "../common/BetweenGrayBlocks";
 import useReceiveProjectMonths from "./hook/useReceiveProjectMonths";
 import useReceiveCurrentMonthStatistics from "./hook/useReceiveCurrentMonthStatistics";
-import mapStatistics from "./mapper/mapStatistics";
+import mapTotalStatistics from "./mapper/mapTotalStatistics";
+import monthNames from "./const/monthNames";
 
 const Chart = () => {
   const [isShow, setIsShow] = useState(false);
@@ -34,10 +35,12 @@ const Chart = () => {
   if (!months || months.length === 0) return <View><Text style={styles.eventDate}>Statistics are not ready yet</Text></View>;
 
   setSelectedMonth(months[0]);
-  const statistics = useReceiveCurrentMonthStatistics(months[0], user.id);
+  const monthName = months[0].split(" ")[0];
+  const yearName = months[0].split(" ")[1];
+  const statistics = useReceiveCurrentMonthStatistics(user.id, monthNames.indexOf(monthName) + 1, yearName);
   
   if (!statistics) return <View><Text style={styles.eventDate}>Statistics are not ready yet</Text></View>;
-  const [purchaseCategories, incomeCategories, purchasesTotal, purchasesLimit, incomesTotal] = mapStatistics(statistics);
+  const [purchaseCategories, incomeCategories, purchasesTotal, purchasesLimit, incomesTotal] = mapTotalStatistics(statistics);
 
   return (
     <View style={{padding: 14}}>

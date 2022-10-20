@@ -1,4 +1,4 @@
-function mapStatistics(statistics) {
+function mapTotalStatistics(statistics) {
   const purchaseCategories = [];
   const incomeCategories = [];
   Object.keys(statistics.purchaseCategories).map(key => purchaseCategories.push(statistics.purchaseCategories[key]));
@@ -11,4 +11,4 @@ function mapStatistics(statistics) {
   return [purchaseCategories, incomeCategories, purchasesTotal, purchasesLimit, incomesTotal];
 }
 
-export default mapStatistics;
+export default mapTotalStatistics;

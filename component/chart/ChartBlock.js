@@ -1,80 +1,20 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Alert, Text, View,} from 'react-native';
+import React, {useContext} from 'react';
+import {Text, View} from 'react-native';
 import styles from "../../Styles";
 import {Grid, LineChart, XAxis, YAxis} from 'react-native-svg-charts';
-import axios from "axios";
-import {URL, url} from "../../common/URL";
 import {UserContext} from "../login/Login";
+import {getData, verticalContentInset, xAxisHeight} from './const/chartConfig'
+import useReceiveCurrentMonthStatistics from "./hook/useReceiveCurrentMonthStatistics";
+import mapPurchaseStatistics from "./mapper/mapPurchaseStatistics";
 
 const ChartBlock = () => {
   const user = useContext(UserContext);
-  const [statistics, setStatistics] = useState([]);
-  const [amounts, setAmounts] = useState([]);
-  const [limits, setLimits] = useState([]);
-  const [todayLimits, setTodayLimits] = useState([]);
-  const [categories, setCategories] = useState([]);
 
-  const receiveCurrentMonthStatistics = () => {
-    const body = JSON.stringify({
-      userId: user.id,
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-    });
+  const currentMonthStatistics = useReceiveCurrentMonthStatistics(user.id, new Date().getMonth() + 1, new Date().getFullYear());
+  const [amounts, todayLimits, limits, categories] = mapPurchaseStatistics(currentMonthStatistics);
 
-    axios.post(url(URL.STATISTICS.month), body,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(result => mapStatistics(result.data))
-      .catch(error => Alert.alert(error.response.data.title, error.response.data.message));
-  };
-
-  const mapStatistics = (data) => {
-    const amounts = [];
-    const todayLimits = [];
-    const limits = [];
-    const resultCategories = [];
-    const categories = data.purchaseCategories;
-    const date = new Date();
-    const daysInMonth = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
-    Object.keys(categories).map(key => {
-      const category = categories[key];
-      amounts.push(category.amount);
-      todayLimits.push(category.limit * (date.getDate() / daysInMonth));
-      limits.push(category.limit);
-      resultCategories.push(category.category.name);
-    })
-
-    setAmounts(amounts);
-    setTodayLimits(todayLimits);
-    setLimits(limits);
-    setCategories(resultCategories);
-  }
-
-  useEffect(() => receiveCurrentMonthStatistics(), [statistics.length]);
-
-  const data = [
-    {
-      data: amounts,
-      svg: {stroke: 'lightgreen'},
-    },
-    {
-      data: todayLimits,
-      svg: {stroke: 'yellow'},
-    },
-    {
-      data: limits,
-      svg: {stroke: 'red'},
-    }
-  ];
-
+  const data = getData(amounts, todayLimits, limits);
   const xData = data[0].data;
-
-  const verticalContentInset = {top: 10, bottom: 10}
-  const xAxisHeight = 30
-
   return (
     <>
       <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
