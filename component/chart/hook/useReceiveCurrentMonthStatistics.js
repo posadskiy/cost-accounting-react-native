@@ -1,4 +1,3 @@
-import {Alert} from "react-native";
 import {useEffect, useState} from "react";
 import {loadStatisticsMonths} from "../action/statisticActions";
 
@@ -16,7 +15,7 @@ function useReceiveCurrentMonthStatistics(userId, month, year) {
         const statistics = await loadStatisticsMonths(body);
         setStatistics(statistics);
       } catch (e) {
-        Alert.alert(e.response.data.title, e.response.data.message);
+        console.warn("useReceiveCurrentMonthStatistics: " + e.name + ": " + e.message);
       }
     }
     
