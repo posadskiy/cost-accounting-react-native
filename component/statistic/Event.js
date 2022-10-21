@@ -1,10 +1,10 @@
-import React, {useCallback, useContext} from 'react';
+import React, {useContext} from 'react';
 import {Alert, Text, TouchableHighlight, View} from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import styles from "../../Styles";
-import {URL, url} from '../../common/URL';
-import axios from "axios";
 import {UserContext} from "../login/Login";
+import useDeletePurchaseCallback from "./hook/useDeletePurchaseCallback";
+import useDeleteIncomeCallback from "./hook/useDeleteIncomeCallback";
 
 const Event = ({event}) => {
   const user = useContext(UserContext);
@@ -12,21 +12,9 @@ const Event = ({event}) => {
   const amount = (isIncome ? "+" : "-") + event.amount.toFixed(2) + "$";
   const moneyActionTypeString = isIncome ? "income" : "purchase";
 
-  const deleteEvent = useCallback(() => {
-    const body = JSON.stringify({
-      userId: user.id,
-      purchaseId: event.id,
-      incomeId: event.id,
-    });
-
-    axios.post(url(isIncome ? URL.INCOME.delete : URL.PURCHASE.delete), body, {
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    })
-      .then(response => alert("Deleted"))
-      .catch(error => console.log(error));
-  }, [event]);
+  const deleteCallback = isIncome ? 
+    useDeleteIncomeCallback(user.id, event.id) : 
+    useDeletePurchaseCallback(user.id, event.id);
 
   return (
     <TouchableHighlight
@@ -43,7 +31,7 @@ const Event = ({event}) => {
           },
           {
             text: "Delete",
-            onPress: deleteEvent,
+            onPress: deleteCallback,
           }
         ]
       )}
