@@ -29,8 +29,6 @@ import BetweenGrayBlocks from "../common/BetweenGrayBlocks";
 import Line from "../common/Line";
 import GrayBlock from "../common/GrayBlock";
 import ProjectUser from "./ProjectUser";
-import useReceiveAllInProject from "./hook/useReceiveAllInProject";
-import useReceiveCurrencies from "./hook/useReceiveCurrencies";
 
 const MoneyAction = ({mode}) => {
   const DEFAULT_CURRENCY = "USD";
@@ -49,6 +47,7 @@ const MoneyAction = ({mode}) => {
   const [isPrivate, setIsPrivate] = useState(false);
   const [isSplit, setIsSplit] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
   const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
   const [projectUsers, setProjectUsers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -305,11 +304,27 @@ const MoneyAction = ({mode}) => {
     receiveCategories();
   }, [user.id]);
 
-  const currencies = useReceiveCurrencies();
-  const projectUsers = useReceiveAllInProject(user.id);
+  useEffect(() => {
+    const receiveCurrencies = async () => {
+      const currencies = await loadCurrencies();
 
-  const pickedProjectUsers = projectUsers.filter(projectUser => projectUser.isPicked)
-    .map(projectUser => projectUser.name + ": " + projectUser.amount + " ");
+      setCurrencies(currencies);
+    };
+
+    receiveCurrencies();
+  }, [currencies.length]);
+
+  useEffect(() => {
+    const receiveAllInProject = async () => {
+      const allUsersInProject = await loadAllUsersInProject(user.id);
+
+      setProjectUsers(mapCleanProjectUsers(allUsersInProject));
+    };
+
+    receiveAllInProject();
+  }, [projectUsers.length]);
+
+  const pickedProjectUsers = projectUsers.filter(projectUser => projectUser.isPicked).map(projectUser => projectUser.name + ": " + projectUser.amount + " ");
 
   return (
     <ScrollView
